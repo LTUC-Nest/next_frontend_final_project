@@ -1,17 +1,17 @@
 "use client";
 import "./globals.css";
-import ThemeWrapper from "./context/theme";
-import Header from "./components/Header";
-
+import ThemeWrapper from "./context/themeContext";
+import  AuthContext  from "./context/authContext";
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <ThemeWrapper>
-        <body>
-          <Header />
-          {children}
-        </body>
-      </ThemeWrapper>
+      <body>
+        <ThemeWrapper>
+          <AuthContext>
+          <main>{children}</main>
+          </AuthContext>
+        </ThemeWrapper>
+      </body>
     </html>
   );
 }
