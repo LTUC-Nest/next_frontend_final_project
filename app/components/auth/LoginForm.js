@@ -17,15 +17,18 @@ function LoginForm() {
   // const [passwordStrength, setPasswordStrength] = useState(0);
 
   const {login} = useContext(AuthContext)
-  
+ 
   const handleSubmit = (e) => {
     
 
     e.preventDefault();
     const username = e.target.username.value
     const password = e.target.password.value
+
     console.log(username,password)
     login({username,password})
+
+
     
   };
 

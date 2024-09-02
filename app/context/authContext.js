@@ -41,18 +41,21 @@ export default function AuthWrapper({ children }) {
   // 4. Define the login function
   async function login(userInfo) {
     try {
-      console.log("-----111111----")
+    
 
       const url = 'http://127.0.0.1:8000/api/token/';
      
 
       const res = await axios.post(url, userInfo);
-      console.log("-----222222----")
+     
+      
 
       const tokens = res.data;
-      console.log(tokens)
 
-      console.log(tokens)
+
+
+
+      
 
       // Save tokens to state and localStorage
       setGlobalLoginState((prevState) => ({
@@ -89,6 +92,7 @@ export default function AuthWrapper({ children }) {
       ...prevState,
       login: login,
       logout: logout,
+      
     }));
   }, []);
 

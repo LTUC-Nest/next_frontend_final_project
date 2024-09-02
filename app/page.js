@@ -1,29 +1,39 @@
 "use client";
 import LoginForm from "./components/auth/LoginForm";
-import Header from "./components/Header";
 import { useContext } from "react";
 import { AuthContext } from "./context/authContext";
-import Dashbord from "./components/dashbord";
+import AdminDashboard from "./components/adminDashbord/adminDashbord";
+import UserDashborde from "./components/userDashbord/userDashbord";
+import { jwtDecode } from "jwt-decode";
 export default function Home() {
-  const {tokens,logout} = useContext(AuthContext)
-  
+  const { tokens, logout } = useContext(AuthContext);
 
   // if the tokens  are releated to the admin >> admin dashbord
-  // if the tokens  are releated to the user  >> user dashbord 
+  // if the tokens  are releated to the user  >> user dashbord
 
-  if (tokens){
-    return(
+  if (tokens) {
+    const decodedTokens = jwtDecode(tokens.access);
+    const is_superuser = decodedTokens.is_superuser;
+
+    if (is_superuser) {
+      return (
+        <>
+          <AdminDashboard />
+        </>
+      );
+    } else {
+      return (
+        <>
+          <h1 onClick={logout}>X</h1>
+          <UserDashborde />
+        </>
+      );
+    }
+  } else {
+    return (
       <>
-            <h1 onClick={logout}>X</h1>
-            <Dashbord/>
+        <LoginForm />
       </>
-
-    )
+    );
   }
-  return (
-    <>
-
-      <LoginForm />
-    </>
-  );
 }
