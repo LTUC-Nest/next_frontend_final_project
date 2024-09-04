@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../context/authContext";
 import Users from "./tenants";
 import KanbanContent from "./KanbanContent/page";
+import LeaseAgreementPage from "./LeaseAgreement/page";
 
 export default function AdminDashboard() {
   const { logout } = useContext(AuthContext);
@@ -19,8 +20,8 @@ export default function AdminDashboard() {
         return <DashboardContent />;
       case "kanban":
         return <KanbanContent />;
-      case "inbox":
-        return <InboxContent />;
+      case "lease":
+        return <LeaseAgreementPage />;
       case "users":
         return <Users />;
       case "products":
@@ -218,7 +219,7 @@ export default function AdminDashboard() {
             </li>
             <li>
               <a
-                onClick={() => setActivePage("SignUp")}
+                onClick={() => setActivePage("lease")}
                 href="#"
                 class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
@@ -321,8 +322,8 @@ export default function AdminDashboard() {
 
 const DashboardContent = () => <div>Dashboard Content</div>;
 // const KanbanContent = () => <div>Here You can View you Properties and add new one</div>;
-const InboxContent = () => <div>Inbox Content</div>;
-const UsersContent = () => <div>Users Content</div>;
-const ProductsContent = () => <div>Products Content</div>;
-const SignOutContent = () => <div>Sign Out Content</div>;
-const SignUpContent = () => <div>Sign Up Content</div>;
+// const InboxContent = () => <div>Inbox Content</div>;
+// const UsersContent = () => <div>Users Content</div>;
+// const ProductsContent = () => <div>Products Content</div>;
+// const SignOutContent = () => <div>Sign Out Content</div>;
+// const SignUpContent = () => <div>Sign Up Content</div>;
