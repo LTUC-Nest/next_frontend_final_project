@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useContext } from "react";
 import { AuthContext } from "../../context/authContext";
-import Users from "./tenants";
+import TenantContent from "./KanbanContent/page";
 
 export default function AdminDashboard() {
   const { logout } = useContext(AuthContext);
@@ -16,7 +16,7 @@ export default function AdminDashboard() {
       case "inbox":
         return <InboxContent />;
       case "users":
-        return <Users />;
+        return <TenantContent />;
       case "products":
         return <ProductsContent />;
       case "signOut":
