@@ -1,7 +1,7 @@
 'use client';
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
-import LoadingSpinner from "@/components/LoadingSpinner";
+import LoadingSpinner from "@/app/components/LoadingSpinner";
 
 // 1. Create the context
 export const AuthContext = createContext();

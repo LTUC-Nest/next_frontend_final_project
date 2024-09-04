@@ -1,8 +1,8 @@
 // app/layout.js
 "use client";
 
-import Header from '../components/Header/Header';
-import Footer from '../components/Footer';
+import Header from './components/Header/Header';
+import Footer from './components/Footer';
 import AuthWrapper from './context/authContext'; // تأكد من المسار الصحيح
 import { ThemeProvider } from 'next-themes';
 import "./globals.css";

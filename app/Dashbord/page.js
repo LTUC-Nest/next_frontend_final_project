@@ -1,10 +1,10 @@
 "use client";
 
-import LoginForm from "@/components/auth/LoginForm";
+import LoginForm from "@/app/components/auth/LoginForm";
 import { useContext } from "react";
 import { AuthContext } from "../context/authContext";
-import AdminDashboard from "@/components/AdminDashbord/AdminDashboard";
-import UserDashborde from "@/components/UserDashbord/UserDashbord";
+import AdminDashboard from "@/app/components/AdminDashbord/AdminDashboard";
+import UserDashborde from "@/app/components/UserDashbord/UserDashbord";
 import { jwtDecode } from "jwt-decode";
 
 

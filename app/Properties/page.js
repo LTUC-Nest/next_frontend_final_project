@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import PropertyCard from "@/components/properties/card";
+import PropertyCard from "@/app/components/properties/card";
 import usePropertyResource from '@/app/customeHook/userResourceProperty';
 
 export default function Properties() {
