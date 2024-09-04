@@ -1,40 +1,12 @@
 "use client";
-import LoginForm from "./components/auth/LoginForm";
-import { useContext } from "react";
-import { AuthContext } from "./context/authContext";
-import AdminDashboard from "./components/adminDashbord/adminDashbord";
-import UserDashborde from "./components/userDashbord/userDashbord";
-import { jwtDecode } from "jwt-decode";
+// Here In this File, We will Render the Componennt of the Home Page from the Home components Folder
+import Link from "next/link";
 export default function Home() {
-  const { tokens, logout } = useContext(AuthContext);
+  return(
+    <>
+      <a href="/authPage">Sign In</a>
+      HomePage
+    </>
+  )
 
-  // if the tokens  are releated to the admin >> admin dashbord
-  // if the tokens  are releated to the user  >> user dashbord
-
-  if (tokens) {
-    const decodedTokens = jwtDecode(tokens.access);
-    const is_superuser = decodedTokens.is_superuser;
-
-    if (is_superuser) {
-      return (
-        <>
-       
-          <AdminDashboard />
-        </>
-      );
-    } else {
-      return (
-        <>
-          <h1 onClick={logout}>X</h1>
-          <UserDashborde />
-        </>
-      );
-    }
-  } else {
-    return (
-      <>
-        <LoginForm />
-      </>
-    );
-  }
 }
