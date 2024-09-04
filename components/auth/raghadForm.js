@@ -2,10 +2,10 @@
 
 import { useState } from 'react';
 import zxcvbn from 'zxcvbn';
-import Button from '../Button';
+import { useContext } from 'react';
+import { AuthContext } from '../../context/authContext';
 
-
-export default function LoginForm() {
+function LoginForm() {
   const [accountType, setAccountType] = useState('tenant');
   const [isRegistering, setIsRegistering] = useState(false);
   const [firstName, setFirstName] = useState('');
@@ -16,58 +16,62 @@ export default function LoginForm() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordStrength, setPasswordStrength] = useState(0);
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    // Handle login logic here
-  };
-
-  const handleRegister = (e) => {
-    e.preventDefault();
-    if (password !== confirmPassword) {
-      alert('Passwords do not match!');
-      return;
-    }
-    if (passwordStrength < 3) {
-      alert('Password is too weak!');
-      return;
-    }
-    // Handle registration logic here
-  };
-
-  const handlePasswordChange = (e) => {
-    const newPassword = e.target.value;
-    setPassword(newPassword);
-    setPasswordStrength(zxcvbn(newPassword).score + 1);
-  };
-
-  const handleConfirmPasswordChange = (e) => {
-    setConfirmPassword(e.target.value);
-  };
-
-  const handleToggleForm = () => {
-    setIsRegistering(!isRegistering);
-  };
-
-  const passwordsMatch = password === confirmPassword;
-
-  const inputClasses = "block w-full px-5 py-3 mt-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white bg-white border border-gray-200 rounded-md text-gray-700 placeholder-gray-400 focus:border-primary dark:focus:border-primary focus:ring-primary focus:outline-none focus:ring focus:ring-opacity-40";
+  const {login} = useContext(AuthContext)
   
-  const dynamicClass = (condition) => condition ? 'border-green-500' : 'border-red-500';
-  const dynamicMessage = (condition, positiveMsg, negativeMsg) => condition ? positiveMsg : negativeMsg;
+  const handleSubmit = (e) => {
+    
+
+    e.preventDefault();
+    const username = e.target.username.value
+    const password = e.target.password.value
+    console.log(username,password)
+    login({username,password})
+    
+  };
+
+
+// ---------------------------------------------------------------------------------------------------------------------- 
+  // const handleRegister = (e) => {
+  //   e.preventDefault();
+  //   if (password !== confirmPassword) {
+  //     alert('Passwords do not match!');
+  //     return;
+  //   }
+  //   if (passwordStrength < 3) {
+  //     alert('Password is too weak!');
+  //     return;
+  //   }
+  // };
+  // const handlePasswordChange = (e) => {
+  //   const newPassword = e.target.value;
+  //   setPassword(newPassword);
+  //   setPasswordStrength(zxcvbn(newPassword).score + 1);
+  // };
+  // const handleConfirmPasswordChange = (e) => {
+  //   setConfirmPassword(e.target.value);
+  // };
+  // const handleToggleForm = () => {
+  //   setIsRegistering(!isRegistering);
+  // };
+// ---------------------------------------------------------------------------------------------------------------------- 
+
+  // const passwordsMatch = password === confirmPassword;
 
   return (
-    <section className="bg-bg-light dark:bg-bg-dark">
-      <div className="flex justify-center min-h-screen">
-        <div className="hidden bg-cover lg:block"></div>
+
+<>
+ <section className="bg-bg-light dark:bg-bg-dark">
+       <div className="flex justify-center min-h-screen">
+         <div className="hidden bg-cover lg:block"></div>
 
         <div className="flex items-center w-full max-w-3xl p-8 mx-auto lg:px-12 lg:w-3/5">
           <div className="w-full">
             <h1 className="text-4xl font-bold tracking-wider dark:text-text-light text-[#5d3f31] capitalize">
-              {accountType === 'tenant' ? 'Tenant Login' : 'Property Owner Login'}
-            </h1>
+               {accountType === 'tenant' ? 'Tenant Login' : 'Property Owner Login'}
+           </h1>
 
-            <p className="mt-4 dark:text-gray-400 text-lg text-[#724c3a]">
-              {accountType === 'tenant'
+             <p className="mt-4 dark:text-gray-400 text-lg text-[#724c3a]">
+               {accountType === 'tenant'
                 ? 'Please log in to your tenant account.'
                 : 'Please log in to your property owner account.'}
             </p>
@@ -75,28 +79,26 @@ export default function LoginForm() {
             <div className="mt-6">
               <h1 className="text-[#724c3a] dark:text-gray-300">Select type of account</h1>
 
-              <div className="mt-3 md:flex md:items-center md:-mx-2 ">
-                <Button
-                  type="button"
+              <div className="mt-3 md:flex md:items-center md:-mx-2">
+                <button
                   onClick={() => setAccountType('tenant')}
-                  isActive={accountType === 'tenant'}
+                  className={`flex justify-center w-full px-6 py-3 rounded-md md:w-auto md:mx-2 focus:outline-none ${accountType === 'tenant' ? 'bg-primary text-white' : 'text-primary border border-primary'}`}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
                   <span className="mx-2">Tenant</span>
-                </Button>
+                </button>
 
-                <Button
-                  type="button"
+                <button
                   onClick={() => setAccountType('property-owner')}
-                  isActive={accountType === 'property-owner'}
+                  className={`flex justify-center w-full px-6 py-3 mt-4 rounded-md md:mt-0 md:w-auto md:mx-2 ${accountType === 'property-owner' ? 'bg-primary text-white' : 'text-primary border border-primary'}`}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                   </svg>
                   <span className="mx-2">Property Owner</span>
-                </Button>
+                </button>
               </div>
             </div>
 
@@ -106,10 +108,11 @@ export default function LoginForm() {
                   <label className="block mb-2 text-sm dark:text-text-light text-text-dark">Email address</label>
                   <input
                     type="email"
+                    name='email'
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="johnsnow@example.com"
-                    className={inputClasses}
+                    className="block w-full px-5 py-3 mt-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white bg-white border border-gray-200 rounded-md text-gray-700 placeholder-gray-400 focus:border-primary dark:focus:border-primary focus:ring-primary focus:outline-none focus:ring focus:ring-opacity-40"
                   />
                 </div>
 
@@ -117,18 +120,20 @@ export default function LoginForm() {
                   <label className="block mb-2 text-sm dark:text-text-light text-text-dark">Password</label>
                   <input
                     type="password"
+                    name='password'
                     value={password}
                     onChange={handlePasswordChange}
                     placeholder="Enter your password"
-                    className={inputClasses}
+                    className="block w-full px-5 py-3 mt-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white bg-white border border-gray-200 rounded-md text-gray-700 placeholder-gray-400 focus:border-primary dark:focus:border-primary focus:ring-primary focus:outline-none focus:ring focus:ring-opacity-40"
                   />
                 </div>
 
-                <Button
+                <button
                   type="submit"
+                  className="flex justify-center w-full px-6 py-3 mt-6 text-l tracking-wide text-white capitalize transition-colors duration-300 transform bg-primary rounded-md hover:bg-primary/80 focus:outline-none focus:ring focus:ring-primary/50 focus:ring-opacity-50"
                 >
-                  Login
-                </Button>
+                  <span>Login</span>
+                </button>
               </form>
             ) : (
               <div>
@@ -138,10 +143,11 @@ export default function LoginForm() {
                       <label className="block mb-2 text-sm dark:text-text-light text-text-dark">Email address</label>
                       <input
                         type="email"
+                        name = 'email'
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="johnsnow@example.com"
-                        className={inputClasses}
+                        className="block w-full px-5 py-3 mt-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white bg-white border border-gray-200 rounded-md text-gray-700 placeholder-gray-400 focus:border-primary dark:focus:border-primary focus:ring-primary focus:outline-none focus:ring focus:ring-opacity-40"
                       />
                     </div>
 
@@ -149,18 +155,20 @@ export default function LoginForm() {
                       <label className="block mb-2 text-sm dark:text-text-light text-text-dark">Password</label>
                       <input
                         type="password"
+                        name='password'
                         value={password}
                         onChange={handlePasswordChange}
                         placeholder="Enter your password"
-                        className={inputClasses}
+                        className="block w-full px-5 py-3 mt-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white bg-white border border-gray-200 rounded-md text-gray-700 placeholder-gray-400 focus:border-primary dark:focus:border-primary focus:ring-primary focus:outline-none focus:ring focus:ring-opacity-40"
                       />
                     </div>
 
-                    <Button
+                    <button
                       type="submit"
+                      className="flex justify-center w-full px-6 py-3 mt-6 text-l tracking-wide text-white capitalize transition-colors duration-300 transform bg-primary rounded-md hover:bg-primary/80 focus:outline-none focus:ring focus:ring-primary/50 focus:ring-opacity-50"
                     >
-                      Login
-                    </Button>
+                      <span>Login</span>
+                    </button>
                   </form>
                 ) : (
                   <form onSubmit={handleRegister} className="mt-8">
@@ -171,7 +179,7 @@ export default function LoginForm() {
                         value={firstName}
                         onChange={(e) => setFirstName(e.target.value)}
                         placeholder="John"
-                        className={inputClasses}
+                        className="block w-full px-5 py-3 mt-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white bg-white border border-gray-200 rounded-md text-gray-700 placeholder-gray-400 focus:border-primary dark:focus:border-primary focus:ring-primary focus:outline-none focus:ring focus:ring-opacity-40"
                       />
                     </div>
 
@@ -182,7 +190,7 @@ export default function LoginForm() {
                         value={lastName}
                         onChange={(e) => setLastName(e.target.value)}
                         placeholder="Snow"
-                        className={inputClasses}
+                        className="block w-full px-5 py-3 mt-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white bg-white border border-gray-200 rounded-md text-gray-700 placeholder-gray-400 focus:border-primary dark:focus:border-primary focus:ring-primary focus:outline-none focus:ring focus:ring-opacity-40"
                       />
                     </div>
 
@@ -193,7 +201,7 @@ export default function LoginForm() {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="johnsnow@example.com"
-                        className={inputClasses}
+                        className="block w-full px-5 py-3 mt-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white bg-white border border-gray-200 rounded-md text-gray-700 placeholder-gray-400 focus:border-primary dark:focus:border-primary focus:ring-primary focus:outline-none focus:ring focus:ring-opacity-40"
                       />
                     </div>
 
@@ -204,7 +212,7 @@ export default function LoginForm() {
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
                         placeholder="+1234567890"
-                        className={inputClasses}
+                        className="block w-full px-5 py-3 mt-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white bg-white border border-gray-200 rounded-md text-gray-700 placeholder-gray-400 focus:border-primary dark:focus:border-primary focus:ring-primary focus:outline-none focus:ring focus:ring-opacity-40"
                       />
                     </div>
 
@@ -212,13 +220,14 @@ export default function LoginForm() {
                       <label className="block mb-2 text-sm dark:text-text-light text-text-dark">Password</label>
                       <input
                         type="password"
+                        name='password'
                         value={password}
                         onChange={handlePasswordChange}
                         placeholder="Enter your password"
-                        className={`${inputClasses} ${dynamicClass(passwordStrength < 3)}`}
+                        className={`block w-full px-5 py-3 mt-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white bg-white border border-gray-200 rounded-md text-gray-700 placeholder-gray-400 focus:border-primary dark:focus:border-primary focus:ring-primary focus:outline-none focus:ring focus:ring-opacity-40 ${passwordStrength < 3 ? 'border-red-500' : 'border-green-500'}`}
                       />
                       <small className={`text-xs mt-1 ${passwordStrength < 3 ? 'text-red-500' : 'text-green-500'}`}>
-                        {dynamicMessage(passwordStrength < 3, 'Password strength is good', 'Password is too weak')}
+                        {passwordStrength < 3 ? 'Password is too weak' : 'Password strength is good'}
                       </small>
                     </div>
 
@@ -229,35 +238,36 @@ export default function LoginForm() {
                         value={confirmPassword}
                         onChange={handleConfirmPasswordChange}
                         placeholder="Confirm your password"
-                        className={`${inputClasses} ${dynamicClass(!passwordsMatch)}`}
+                        className={`block w-full px-5 py-3 mt-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white bg-white border border-gray-200 rounded-md text-gray-700 placeholder-gray-400 focus:border-primary dark:focus:border-primary focus:ring-primary focus:outline-none focus:ring focus:ring-opacity-40 ${passwordsMatch ? 'border-green-500' : 'border-red-500'}`}
                       />
                       <small className={`text-xs mt-1 ${passwordsMatch ? 'text-green-500' : 'text-red-500'}`}>
-                        {dynamicMessage(passwordsMatch, 'Passwords match', 'Passwords do not match')}
+                        {passwordsMatch ? 'Passwords match' : 'Passwords do not match'}
                       </small>
                     </div>
 
-                    <Button
+                    <button
                       type="submit"
+                      className="flex justify-center w-full px-6 py-3 mt-6 text-l tracking-wide text-white capitalize transition-colors duration-300 transform bg-primary rounded-md hover:bg-primary/80 focus:outline-none focus:ring focus:ring-primary/50 focus:ring-opacity-50"
                     >
-                      Register
-                    </Button>
+                      <span>Register</span>
+                    </button>
                   </form>
                 )}
                 <div className="mt-4 text-sm">
-                  <Button
-                    type="button"
-                    onClick={handleToggleForm}
-                    isActive={isRegistering}
-                  >
+                  <button onClick={handleToggleForm} className="text-primary hover:underline">
                     {isRegistering ? 'Already have an account? Login' : 'Create a new account'}
-                  </Button>
+                  </button>
                 </div>
-              </div>
-            )}
-          </div>
-        </div>
+    </div>
+             )}
+           </div>
+         </div>
       </div>
     </section>
+</>
+
+   
   );
 }
 
+export default LoginForm;
