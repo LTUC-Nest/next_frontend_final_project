@@ -12,8 +12,10 @@ import Logo from './Logo';
 
 const initialNavigation = [
   { name: 'Home', href: '/', current: false },
-  { name: 'Our Services', href: '#', current: false },
+  { name: 'Marketplace', href: '/Marketplace', current: false },
   { name: 'Properties', href: '/Properties', current: false },
+  { name: 'Partners', href: '/Partners', current: false },
+  { name: 'Pricing', href: '/Pricing', current: false },
   { name: 'About Us', href: '/about', current: false },
 ];
 
@@ -40,7 +42,7 @@ export default function Header() {
 
   const handleLogout = () => {
     logout();
-    router.push('/login');
+    router.push('/Dashbord');
   };
 
   return (

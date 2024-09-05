@@ -1,6 +1,6 @@
 "use client";
 
-import LoginForm from "@/app/components/auth/LoginForm";
+import LoginForm from "../components/login/LoginForm";
 import { useContext } from "react";
 import { AuthContext } from "../context/authContext";
 import AdminDashboard from "@/app/components/AdminDashbord/AdminDashboard";
