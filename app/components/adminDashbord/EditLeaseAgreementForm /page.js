@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useLeaseAgreement } from '@/app/customeHook/useleaseAgreement';
 
-const EditLeaseAgreementForm = ({ leaseAgreementId }) => {
+const EditLeaseAgreementForm = ({ leaseAgreementId, onClose, fetchLeases }) => {
     const {
         fetchLeaseAgreementDetailsForEdit,
         handleEditSubmit,
@@ -34,22 +34,30 @@ const EditLeaseAgreementForm = ({ leaseAgreementId }) => {
         }
     }, [leaseAgreementId, fetchLeaseAgreementDetailsForEdit]);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        handleEditSubmit(e);
+        try {
+            await handleEditSubmit();
+            fetchLeases(); // Refetch leases to update the list
+            onClose(); // Close the form after successful update
+        } catch (err) {
+            console.error('Error updating lease agreement:', err);
+        }
     };
 
     return (
         <div>
             <h1>Edit Lease Agreement</h1>
             {error && <p style={{ color: 'red' }}>{error}</p>}
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
                     <label htmlFor="tenant">Tenant</label>
                     <select
                         id="tenant"
                         value={editTenant}
                         onChange={(e) => setEditTenant(e.target.value)}
+                        required
+                        className="block w-full mt-1 px-2 py-1 border border-gray-300 rounded-lg"
                     >
                         <option value="">Select Tenant</option>
                         {nonStaffUsers.map(user => (
@@ -66,6 +74,8 @@ const EditLeaseAgreementForm = ({ leaseAgreementId }) => {
                         id="property"
                         value={editProperty}
                         onChange={(e) => setEditProperty(e.target.value)}
+                        required
+                        className="block w-full mt-1 px-2 py-1 border border-gray-300 rounded-lg"
                     >
                         <option value="">Select Property</option>
                         {properties.map(prop => (
@@ -83,6 +93,8 @@ const EditLeaseAgreementForm = ({ leaseAgreementId }) => {
                         id="leaseStartDate"
                         value={editLeaseStartDate}
                         onChange={(e) => setEditLeaseStartDate(e.target.value)}
+                        required
+                        className="block w-full mt-1 px-2 py-1 border border-gray-300 rounded-lg"
                     />
                 </div>
 
@@ -93,6 +105,8 @@ const EditLeaseAgreementForm = ({ leaseAgreementId }) => {
                         id="leaseEndDate"
                         value={editLeaseEndDate}
                         onChange={(e) => setEditLeaseEndDate(e.target.value)}
+                        required
+                        className="block w-full mt-1 px-2 py-1 border border-gray-300 rounded-lg"
                     />
                 </div>
 
@@ -103,6 +117,8 @@ const EditLeaseAgreementForm = ({ leaseAgreementId }) => {
                         id="rentAmount"
                         value={editRentAmount}
                         onChange={(e) => setEditRentAmount(e.target.value)}
+                        required
+                        className="block w-full mt-1 px-2 py-1 border border-gray-300 rounded-lg"
                     />
                 </div>
 
@@ -113,6 +129,8 @@ const EditLeaseAgreementForm = ({ leaseAgreementId }) => {
                         id="securityDeposit"
                         value={editSecurityDeposit}
                         onChange={(e) => setEditSecurityDeposit(e.target.value)}
+                        required
+                        className="block w-full mt-1 px-2 py-1 border border-gray-300 rounded-lg"
                     />
                 </div>
 
@@ -122,6 +140,8 @@ const EditLeaseAgreementForm = ({ leaseAgreementId }) => {
                         id="paymentFrequency"
                         value={editPaymentFrequency}
                         onChange={(e) => setEditPaymentFrequency(e.target.value)}
+                        required
+                        className="block w-full mt-1 px-2 py-1 border border-gray-300 rounded-lg"
                     >
                         <option value="MONTHLY">Monthly</option>
                         <option value="QUARTERLY">Quarterly</option>
@@ -135,6 +155,8 @@ const EditLeaseAgreementForm = ({ leaseAgreementId }) => {
                         id="leaseTerms"
                         value={editLeaseTerms}
                         onChange={(e) => setEditLeaseTerms(e.target.value)}
+                        required
+                        className="block w-full mt-1 px-2 py-1 border border-gray-300 rounded-lg"
                     />
                 </div>
 
@@ -145,10 +167,23 @@ const EditLeaseAgreementForm = ({ leaseAgreementId }) => {
                         id="isActive"
                         checked={editIsActive}
                         onChange={(e) => setEditIsActive(e.target.checked)}
+                        className="block mt-1"
                     />
                 </div>
 
-                <button type="submit">Update Lease Agreement</button>
+                <button
+                    type="submit"
+                    className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-150 ease-in-out"
+                >
+                    Update Lease Agreement
+                </button>
+                <button
+                    type="button"
+                    onClick={onClose}
+                    className="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition duration-150 ease-in-out"
+                >
+                    Cancel
+                </button>
             </form>
         </div>
     );

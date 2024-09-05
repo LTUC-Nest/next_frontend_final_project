@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 export const useLeaseAgreement = () => {
-    // State variables for lease agreement form
+    // State variables for the form
     const [tenant, setTenant] = useState('');
     const [property, setProperty] = useState('');
     const [leaseStartDate, setLeaseStartDate] = useState('');
@@ -19,6 +19,8 @@ export const useLeaseAgreement = () => {
     const [properties, setProperties] = useState([]);
     const [leaseAgreements, setLeaseAgreements] = useState([]);
     const [editingLeaseAgreement, setEditingLeaseAgreement] = useState(null);
+
+    // State variables for editing form
     const [editTenant, setEditTenant] = useState('');
     const [editProperty, setEditProperty] = useState('');
     const [editLeaseStartDate, setEditLeaseStartDate] = useState('');
@@ -53,14 +55,14 @@ export const useLeaseAgreement = () => {
         fetchProperties();
     }, []);
 
-    // Fetch lease agreements
+    // Fetch lease agreements and map tenant and property names
     const fetchLeaseAgreements = async () => {
         try {
             const response = await axios.get('http://localhost:8000/api/v1/leaseAgreement/');
             const agreements = response.data.map(agreement => {
                 const tenant = nonStaffUsers.find(user => user.id === agreement.tenant);
                 const property = properties.find(prop => prop.id === agreement.property);
-    
+
                 return {
                     ...agreement,
                     tenantUsername: tenant ? tenant.username : 'Unknown Tenant',
@@ -73,12 +75,10 @@ export const useLeaseAgreement = () => {
         }
     };
 
-
-    // ----------------------------
     // Fetch lease agreement details for editing
-    const fetchLeaseAgreementDetailsForEdit = async (leaseAgreementId) => {
+    const fetchLeaseAgreementDetailsForEdit = async (id) => {
         try {
-            const response = await axios.get(`http://localhost:8000/api/v1/leaseAgreement/${leaseAgreementId}`);
+            const response = await axios.get(`http://localhost:8000/api/v1/leaseAgreement/${id}`);
             const agreement = response.data;
 
             setEditingLeaseAgreement(agreement);
@@ -86,8 +86,8 @@ export const useLeaseAgreement = () => {
             setEditProperty(agreement.property);
             setEditLeaseStartDate(agreement.lease_start_date);
             setEditLeaseEndDate(agreement.lease_end_date);
-            setEditRentAmount(agreement.rent_amount);
-            setEditSecurityDeposit(agreement.security_deposit);
+            setEditRentAmount(parseFloat(agreement.rent_amount) || '');
+            setEditSecurityDeposit(parseFloat(agreement.security_deposit) || '');
             setEditPaymentFrequency(agreement.payment_frequency);
             setEditLeaseTerms(agreement.lease_terms);
             setEditIsActive(agreement.is_active);
@@ -95,105 +95,99 @@ export const useLeaseAgreement = () => {
             setError('Failed to fetch lease agreement details: ' + err.message);
         }
     };
-    // -------------------------------------------
+
+    // Common function for handling form submissions
+    const handleFormSubmit = async (payload, endpoint, successMessage) => {
+        try {
+            if (!payload.tenant || !payload.property || !payload.lease_start_date || !payload.lease_end_date) {
+                throw new Error('All fields are required.');
+            }
+
+            const tenantUser = nonStaffUsers.find(user => user.username === payload.tenant);
+            if (!tenantUser) {
+                throw new Error('Invalid tenant username.');
+            }
+
+            const tenantId = tenantUser.id;
+
+            const rentAmountNumber = parseFloat(payload.rent_amount);
+            const securityDepositNumber = parseFloat(payload.security_deposit);
+
+            if (isNaN(rentAmountNumber) || isNaN(securityDepositNumber)) {
+                throw new Error('Rent amount and security deposit must be valid numbers.');
+            }
+
+            payload.tenant = tenantId;
+            payload.rent_amount = rentAmountNumber;
+            payload.security_deposit = securityDepositNumber;
+
+            console.log('Payload:', payload);
+
+            const response = await axios.post(endpoint, payload);
+            console.log('Response:', response.data);
+
+            alert(successMessage);
+            fetchLeaseAgreements(); // Refetch to update the list
+        } catch (error) {
+            console.error('Error:', error.response ? error.response.data : error.message);
+            alert('Failed to process request. ' + (error.response ? error.response.data.detail : error.message));
+            setError(error.message);
+        }
+    };
 
     // Handle lease agreement creation
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            if (!tenant || !property || !leaseStartDate || !leaseEndDate) {
-                throw new Error('All fields are required.');
-            }
-
-            if (!properties.some(prop => prop.id === parseInt(property))) {
-                throw new Error('Invalid property ID.');
-            }
-
-            const tenantUser = nonStaffUsers.find(user => user.username === tenant);
-            if (!tenantUser) {
-                throw new Error('Invalid tenant username.');
-            }
-
-            const tenantId = tenantUser.id;
-
-            const rentAmountNumber = parseFloat(rentAmount);
-            const securityDepositNumber = parseFloat(securityDeposit);
-
-            if (isNaN(rentAmountNumber) || isNaN(securityDepositNumber)) {
-                throw new Error('Rent amount and security deposit must be valid numbers.');
-            }
-
-            const payload = {
-                tenant: tenantId,
-                property,
-                lease_start_date: leaseStartDate,
-                lease_end_date: leaseEndDate,
-                rent_amount: rentAmountNumber,
-                security_deposit: securityDepositNumber,
-                payment_frequency: paymentFrequency,
-                lease_terms: leaseTerms,
-                is_active: isActive,
-            };
-
-            console.log('Payload:', payload);
-
-            const response = await axios.post('http://localhost:8000/api/v1/leaseAgreement/create/', payload);
-
-            alert('Lease Agreement created successfully!');
-        } catch (error) {
-            console.error('Error creating lease agreement:', error.response ? error.response.data : error.message);
-            alert('Failed to create lease agreement. ' + (error.response ? error.response.data.detail : error.message));
-            setError(error.message);
-        }
+        const payload = {
+            tenant,
+            property,
+            lease_start_date: leaseStartDate,
+            lease_end_date: leaseEndDate,
+            rent_amount: rentAmount,
+            security_deposit: securityDeposit,
+            payment_frequency: paymentFrequency,
+            lease_terms: leaseTerms,
+            is_active: isActive,
+        };
+        await handleFormSubmit(payload, 'http://localhost:8000/api/v1/leaseAgreement/create/', 'Lease Agreement created successfully!');
     };
-// --------------------------------------------------
+
     // Handle lease agreement editing
     const handleEditSubmit = async (e) => {
         e.preventDefault();
+        const payload = {
+            tenant: editTenant,
+            property: editProperty,
+            lease_start_date: editLeaseStartDate,
+            lease_end_date: editLeaseEndDate,
+            rent_amount: editRentAmount,
+            security_deposit: editSecurityDeposit,
+            payment_frequency: editPaymentFrequency,
+            lease_terms: editLeaseTerms,
+            is_active: editIsActive,
+        };
+        await handleFormSubmit(payload, `http://localhost:8000/api/v1/leaseAgreement/${editingLeaseAgreement.id}/`, 'Lease Agreement updated successfully!');
+    };
+
+    // Handle lease agreement deletion
+    const handleDeleteLeaseAgreement = async (id) => {
         try {
-            if (!editTenant || !editProperty || !editLeaseStartDate || !editLeaseEndDate) {
-                throw new Error('All fields are required.');
+            if (!id) {
+                throw new Error('Lease Agreement ID is undefined.');
             }
-
-            const tenantUser = nonStaffUsers.find(user => user.username === editTenant);
-            if (!tenantUser) {
-                throw new Error('Invalid tenant username.');
-            }
-
-            const tenantId = tenantUser.id;
-
-            const rentAmountNumber = parseFloat(editRentAmount);
-            const securityDepositNumber = parseFloat(editSecurityDeposit);
-
-            if (isNaN(rentAmountNumber) || isNaN(securityDepositNumber)) {
-                throw new Error('Rent amount and security deposit must be valid numbers.');
-            }
-
-            const payload = {
-                tenant: tenantId,
-                property: editProperty,
-                lease_start_date: editLeaseStartDate,
-                lease_end_date: editLeaseEndDate,
-                rent_amount: rentAmountNumber,
-                security_deposit: editSecurityDeposit,
-                payment_frequency: editPaymentFrequency,
-                lease_terms: editLeaseTerms,
-                is_active: editIsActive,
-            };
-
-            console.log('Edit Payload:', payload);
-
-            const response = await axios.put(`http://localhost:8000/api/v1/leaseAgreement/${editingLeaseAgreement.id}/`, payload);
-
-            alert('Lease Agreement updated successfully!');
-            // Optionally, you can refetch the lease agreements or update the local state here
+    
+            const confirmDelete = window.confirm('Are you sure you want to delete this lease agreement?');
+            if (!confirmDelete) return;
+    
+            await axios.delete(`http://localhost:8000/api/v1/leaseAgreement/${id}/`);
+            fetchLeaseAgreements(); // Refresh the list after deletion
+            alert('Lease Agreement deleted successfully!');
         } catch (error) {
-            console.error('Error updating lease agreement:', error.response ? error.response.data : error.message);
-            alert('Failed to update lease agreement. ' + (error.response ? error.response.data.detail : error.message));
+            console.error('Error deleting lease agreement:', error.response ? error.response.data : error.message);
+            alert('Failed to delete lease agreement. ' + (error.response ? error.response.data.detail : error.message));
             setError(error.message);
         }
     };
-// --------------------------------------------------
 
     return {
         tenant,
@@ -214,32 +208,17 @@ export const useLeaseAgreement = () => {
         setLeaseTerms,
         isActive,
         setIsActive,
-        handleSubmit,
-        fetchLeaseAgreements,
-        fetchLeaseAgreementDetailsForEdit,
-        handleEditSubmit,
-        leaseAgreements,
+        error,
+        setError,
         nonStaffUsers,
         properties,
-        error,
+        leaseAgreements,
         editingLeaseAgreement,
-        editTenant,
-        setEditTenant,
-        editProperty,
-        setEditProperty,
-        editLeaseStartDate,
-        setEditLeaseStartDate,
-        editLeaseEndDate,
-        setEditLeaseEndDate,
-        editRentAmount,
-        setEditRentAmount,
-        editSecurityDeposit,
-        setEditSecurityDeposit,
-        editPaymentFrequency,
-        setEditPaymentFrequency,
-        editLeaseTerms,
-        setEditLeaseTerms,
-        editIsActive,
-        setEditIsActive,
+        setEditingLeaseAgreement,
+        handleSubmit,
+        handleEditSubmit,
+        handleDeleteLeaseAgreement,
+        fetchLeaseAgreements,
+        fetchLeaseAgreementDetailsForEdit,
     };
 };
