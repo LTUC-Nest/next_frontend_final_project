@@ -58,7 +58,7 @@ export default function Header() {
               <UserMenu handleLogout={handleLogout} />
             ) : (
               <button
-                onClick={() => router.push('/login')}
+                onClick={() => router.push('/Dashbord')}
                 className="text-text-dark hover:bg-primary-dark hover:text-bg-light rounded-md px-3 py-2 text-sm font-medium"
               >
                 Sign in
