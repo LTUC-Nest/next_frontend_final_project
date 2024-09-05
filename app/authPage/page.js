@@ -4,7 +4,8 @@ import { useContext } from "react"
 import { AuthContext } from "../context/authContext"
 import AdminDashboard from "../components/adminDashbord/adminDashbord"
 import { jwtDecode } from "jwt-decode"
-
+import Header from "../components/home/header";
+import UserDashborde from "../components/userDashbord/userDashbord";
 export default function AuthPage(){
   const {tokens,logout} = useContext(AuthContext)
   
@@ -27,6 +28,7 @@ export default function AuthPage(){
   }else{
     return (
       <>
+        <Header/>
         <LoginForm/>
       </>
     )

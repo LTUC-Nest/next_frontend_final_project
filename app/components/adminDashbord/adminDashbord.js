@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useContext } from "react";
 import { AuthContext } from "../../context/authContext";
 import TenantContent from "./KanbanContent/page";
+import Leases from "./leasesSec/leases";
 
 export default function AdminDashboard() {
   const { logout } = useContext(AuthContext);
@@ -21,8 +22,8 @@ export default function AdminDashboard() {
         return <ProductsContent />;
       case "signOut":
         return <SignOutContent />;
-      case "signUp":
-        return <SignUpContent />;
+      case "leases":
+        return <Leases />;
       default:
         return <DashboardContent />;
     }
@@ -214,7 +215,7 @@ export default function AdminDashboard() {
             </li>
             <li>
               <a
-                onClick={() => setActivePage("SignUp")}
+                onClick={() => setActivePage("leases")}
                 href="#"
                 class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
@@ -303,7 +304,7 @@ export default function AdminDashboard() {
         </div>
       </aside>
 
-      <div class="p-4 sm:ml-64">
+      <div class="p-12 sm:ml-64">
         <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-3">
           {renderContent()}
         </div>
@@ -318,7 +319,7 @@ const InboxContent = () => <div>Inbox Content</div>;
 const UsersContent = () => <div>Users Content</div>;
 const ProductsContent = () => <div>Products Content</div>;
 const SignOutContent = () => <div>Sign Out Content</div>;
-const SignUpContent = () => <div>Sign Up Content</div>;
+// const SignUpContent = () => <div>Sign Up Content</div>;
 
 {
 

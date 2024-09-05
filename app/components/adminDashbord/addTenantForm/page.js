@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import useTenantResource from '@/app/customeHook/useResourceTenant';
 import { AuthContext } from '@/app/context/authContext';
-import jwtDecode from 'jwt-decode';
+import {jwtDecode} from 'jwt-decode';
 
 
 const AddTenantForm = ({ onClose }) => {
