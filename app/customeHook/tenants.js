@@ -36,8 +36,23 @@ export default function useResourceTenants(){
     }
   }
 
+  async function retrieveResource(id){
+    if (!tokens){
+      return
+    } try{
+      const url = `http://127.0.0.1:8000/api/v1/users/${id}`
+      const res = await fetch(url,config())
+      const jsonRes = res.json()
+      console.log(jsonRes)
+      return jsonRes
+    } catch(err){
+      console.log('error happend during retrieving the data')
+    }
+  }
+
   return {
     fetchTenantsData:data,
+    retrieveTenantsData: retrieveResource,
     loading: tokens && !err && !data,
     error : err
   }

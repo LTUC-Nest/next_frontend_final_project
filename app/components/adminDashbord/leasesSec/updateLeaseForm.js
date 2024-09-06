@@ -5,12 +5,12 @@ import useResourcesLeases from "@/app/customeHook/leases";
 import { useState, useEffect } from "react";
  
 
-export default function CreateModal({ onClose }) {
+export default function UpdateModal({ onClose,preFilledLeaseInfo }) {
   // get the data to fill-out the dropdown menue of tenants, and properties 
   const { fetchPropertiesData } = useResourceProperty();
   const { fetchTenantsData } = useResourceTenants();
   // use the createLeaseData resource from the custom hook for POST the Data
-  const {createdLeaseData} = useResourcesLeases()
+  const {updatedLeaseData} = useResourcesLeases()
 
   let [tenants, setTenants] = useState([]);
   let [properties, setProperties] = useState([]);
@@ -18,7 +18,19 @@ export default function CreateModal({ onClose }) {
   useEffect(() => {
     setProperties(fetchPropertiesData);
   });
+  preFilledLeaseInfo.then((data) => {
 
+    // document.getElementById('lease_id').value = data.id;
+    document.getElementById('tenantSelect').value = data.tenant;
+    document.getElementById('propertySelect').value = data.property;
+    document.getElementById('rent_amount').value = data.rent_amount;
+    document.getElementById('lease_start_date').value = data.lease_start_date;
+    document.getElementById('lease_end_date').value = data.lease_end_date; 
+    document.getElementById('rent_amount').value = data.rent_amount; 
+    document.getElementById('security_deposit').value = data.security_deposit; 
+    document.getElementById('lease_terms').value = data.lease_terms; 
+    document.getElementById('activeCheckBox').checked = data.is_active; 
+  });
   useEffect(() => {
     setTenants(fetchTenantsData);
   });
@@ -54,11 +66,14 @@ export default function CreateModal({ onClose }) {
       lease_terms: e.target.elements.lease_terms.value,
       is_active: checkboxValue, // true //
     };
-    console.log("--------", leaseInfo);
-    createdLeaseData(leaseInfo)
-    const form = document.getElementById('leaseSumbitionForm')
-    form.reset()
-    onClose()
+
+    preFilledLeaseInfo.then((data) => {
+      updatedLeaseData(data.id,leaseInfo)
+      const form = document.getElementById('leaseSumbitionForm')
+      form.reset()
+      onClose()
+    })
+
   };
 
   return (
@@ -66,7 +81,7 @@ export default function CreateModal({ onClose }) {
       <div className="fixed inset-0 flex items-center justify-center z-50">
         <div className="bg-black opacity-50 fixed inset-0"></div>
         <div className="bg-white p-6 rounded shadow-lg relative z-10 w-full max-w-4xl">
-          <h2 className="text-xl font-semibold mb-6">Create Lease</h2>
+          <h2 className="text-xl font-semibold mb-6">Update Lease</h2>
 
           <form
             onSubmit={handleCreatingLeases}
@@ -124,7 +139,9 @@ export default function CreateModal({ onClose }) {
               </label>
               <input
                 type="date"
+                value={preFilledLeaseInfo.lease_start_date}
                 name='lease_start_date'
+                id='lease_start_date'
                 className="w-full p-2 border rounded-lg focus:outline-none focus:border-blue-500"
                 required
               />
@@ -136,8 +153,10 @@ export default function CreateModal({ onClose }) {
                 Lease End Date
               </label>
               <input
-              name="lease_end_date"
+                name="lease_end_date"
+                id="lease_end_date"
                 type="date"
+                value={preFilledLeaseInfo.lease_end_date}
                 className="w-full p-2 border rounded-lg focus:outline-none focus:border-blue-500"
                 required
               />
@@ -152,6 +171,7 @@ export default function CreateModal({ onClose }) {
                 type="number"
                 step='any'
                 name="rent_amount"
+                id="rent_amount"
                 placeholder="Enter rent amount"
                 className="w-full p-2 border rounded-lg focus:outline-none focus:border-blue-500"
                 required
@@ -165,6 +185,7 @@ export default function CreateModal({ onClose }) {
               </label>
               <input
                 name = 'security_deposite'
+                id = 'security_deposit'
                 type="number"
                 step='any'
                 placeholder="Enter security deposit"
@@ -192,6 +213,7 @@ export default function CreateModal({ onClose }) {
               </label>
               <textarea
                 name="lease_terms"
+                id="lease_terms"
                 placeholder="Enter lease terms"
                 className="w-full p-2 border rounded-lg focus:outline-none focus:border-blue-500"
               />
@@ -217,7 +239,7 @@ export default function CreateModal({ onClose }) {
                 type="submit"
                 className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
               >
-                Create Lease
+                Update Lease
               </button>
             </div>
           </form>
