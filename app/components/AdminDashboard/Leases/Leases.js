@@ -77,36 +77,33 @@ export default function Leases(){
                 
             </tr>
         </thead>
-        <tbody>
-          {fetchedLeasesData.map((lease,index) => {
-            
-            return(
+<tbody>
+  {fetchedLeasesData.map((lease, index) => {
+    console.log(lease); // تسجيل كل عنصر في وحدة التحكم للتحقق من البيانات
+    return (
+      <tr key={index} className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 cursor-pointer hover:bg-red-100">
+        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+          {lease.tenant}
+        </th>
+        <td className="px-6 py-4">
+          {lease.property}
+        </td>
+        <td className="px-6 py-4">
+          {lease.lease_start_date}
+        </td>
+        <td className="px-6 py-4">
+          {lease.lease_end_date}
+        </td>
+        <td className="px-6 py-4">
+          <a href="#" className="mr-1 font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+          <a href="#" onClick={() => { deleteLeaseData(lease.id) }} className="ml-1 font-medium text-red-600 dark:text-blue-500 hover:underline">Delete</a>
+        </td>
+      </tr>
+    );
+  })}
+  {showModal && <Modal onClose={closeModal} />}
+</tbody>
 
-              <tr  key={index} class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 cursor-pointer hover:bg-red-100">
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                {lease.tenant}
-                </th>
-                <td class="px-6 py-4">
-                {lease.property}
-                </td>
-                <td class="px-6 py-4">
-                {lease.lease_start_date}
-                </td>
-                <td class="px-6 py-4">
-                {lease.lease_end_date}
-                </td>
-                <td class="px-6 py-4">
-                    <a href="#"  class="mr-1 font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                    <a href="#" onClick={()=>{deleteLeaseData(lease.id)}} class="ml-1 font-medium text-red-600 dark:text-blue-500 hover:underline">Delete</a>
-                
-                </td>
-            </tr>
-
-            )
-          })}
-           {showModal && <Modal onClose={closeModal} />} 
-
-        </tbody>
     </table>
 </div>
 

@@ -24,6 +24,7 @@ const EditTenantForm = ({ tenantId, onClose, fetchTenant }) => {
                 setTenantData(response.data);
                 setFormData(response.data);
             } catch (error) {
+                console.error('Error fetching tenant data:', error); // Log the error for debugging
                 setError('Error fetching tenant data.');
             } finally {
                 setLoading(false);
@@ -47,21 +48,38 @@ const EditTenantForm = ({ tenantId, onClose, fetchTenant }) => {
     // Handle form submission
     const handleSubmit = async (event) => {
         event.preventDefault();
+        setError(null); // Clear previous errors before making a new request
         try {
-            await axios.put(`http://localhost:8000/api/v1/users/${tenantId}`, formData);
-            fetchTenant();
-            onClose(); // Close the form after successful update
+            const response = await axios.put(`http://localhost:8000/api/v1/users/${tenantId}`, formData);
+            console.log('Update Response:', response);  // Log the response for debugging
+            if (response.status >= 200 && response.status < 300) {  // Check if the response status is within the success range
+                await fetchTenant();  // Ensure fetchTenant is awaited if it returns a promise
+                onClose(); // Close the form after successful update
+            } else {
+                console.error('Unexpected response status:', response.status);
+                setError('Unexpected response from server.');
+            }
         } catch (error) {
-            setError('Error updating tenant.');
+            // Differentiate error types
+            if (error.response) {
+                // The request was made and the server responded with a status code
+                console.error('Response error:', error.response);
+                setError(`Error updating tenant: ${error.response.data.message || error.response.statusText}`);
+            } else if (error.request) {
+                // The request was made but no response was received
+                console.error('Request error:', error.request);
+                setError('No response received from the server.');
+            } else {
+                // Something happened in setting up the request that triggered an Error
+                console.error('General error:', error.message);
+                setError('Error updating tenant.');
+                onClose(); // Close the form after successful update
+            }
         }
     };
 
     if (loading) {
         return <div className="fixed inset-0 flex items-center justify-center p-4 bg-gray-900 bg-opacity-50 z-50">Loading...</div>;
-    }
-
-    if (error) {
-        return <div className="fixed inset-0 flex items-center justify-center p-4 bg-gray-900 bg-opacity-50 z-50">{error}</div>;
     }
 
     return (
@@ -73,7 +91,7 @@ const EditTenantForm = ({ tenantId, onClose, fetchTenant }) => {
                         X
                     </button>
                 </div>
-                {error && (
+                {error && !loading && (
                     <div className="mb-4 p-4 bg-red-100 text-red-700 border border-red-300 rounded-md dark:bg-red-800 dark:text-red-200 dark:border-red-700">
                         {error}
                     </div>

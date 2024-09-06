@@ -143,10 +143,8 @@ const Tenant = () => {
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-text-light uppercase tracking-wider">Email</th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-text-light uppercase tracking-wider">Phone Number</th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-text-light uppercase tracking-wider">Address</th>
-                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-text-light uppercase tracking-wider">Date of Birth</th>
-                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-text-light uppercase tracking-wider">Emergency Contact Name</th>
-                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-text-light uppercase tracking-wider">Emergency Contact Phone</th>
-                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-text-light uppercase tracking-wider">Updated At</th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-text-light uppercase tracking-wider">viewMode</th>
+
                         </tr>
                     </thead>
                     <tbody className="bg-gray-100 dark:bg-bg-dark divide-y divide-gray-200 dark:divide-gray-600">
@@ -159,11 +157,14 @@ const Tenant = () => {
                                     <td className="px-6 py-4 text-sm text-gray-600 dark:text-text-light">{tenant.email}</td>
                                     <td className="px-6 py-4 text-sm text-gray-600 dark:text-text-light">{tenant.phone_number}</td>
                                     <td className="px-6 py-4 text-sm text-gray-600 dark:text-text-light">{tenant.address}</td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 dark:text-text-light">{tenant.date_of_birth}</td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 dark:text-text-light">{tenant.emergency_contact_name}</td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 dark:text-text-light">{tenant.emergency_contact_phone}</td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 dark:text-text-light">{tenant.updated_at}</td>
+                                    <button
+                                        onClick={() => handleToggleMoreInfo(tenant.id)}
+                                        className="mt-2 px-3 py-1 bg-primary text-bg-light rounded-lg hover:bg-primary-dark transition duration-150 ease-in-out"
+                                    >
+                                        {expandedTenantId === tenant.id ? 'Less Info' : 'More Info'}
+                                    </button>
                                 </tr>
+
                                 {expandedTenantId === tenant.id && (
                                     <tr>
                                         <td colSpan="10" className="p-4 bg-gray-50 dark:bg-gray-800">
