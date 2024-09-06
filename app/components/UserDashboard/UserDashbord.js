@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useContext } from "react";
 import { AuthContext } from "@/app/context/authContext";
-import KanbanContent from "../AdminDashbord/KanbanContent/page";
 
 export default function UserDashborde() {
   const { logout } = useContext(AuthContext);

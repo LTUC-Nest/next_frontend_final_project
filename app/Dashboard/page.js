@@ -3,8 +3,8 @@
 import LoginForm from "../components/login/LoginForm";
 import { useContext } from "react";
 import { AuthContext } from "../context/authContext";
-import AdminDashboard from "@/app/components/AdminDashbord/AdminDashboard";
-import UserDashborde from "@/app/components/UserDashbord/UserDashbord";
+import AdminDashboard from "@/app/components/AdminDashboard/AdminDashboard";
+import UserDashborde from "@/app/components/UserDashboard/UserDashbord";
 import { jwtDecode } from "jwt-decode";
 
 

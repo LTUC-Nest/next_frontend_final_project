@@ -20,16 +20,16 @@ function LoginForm() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
-      <div className="w-full max-w-md bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg ring-1 ring-gray-900/5 dark:ring-gray-700">
-        <h1 className="text-3xl font-semibold text-gray-900 dark:text-white text-center">Sign In</h1>
-        <p className="mt-2 text-gray-600 dark:text-gray-400 text-center">Sign in to access your account</p>
-        {error && <p className="text-red-500 text-center">{error}</p>}
-        <form onSubmit={handleSubmit} className="mt-6">
-          <div className="relative mb-4">
+    <div className="flex items-center justify-center min-h-screen bg-bg-light dark:bg-bg-dark">
+      <div className="w-full max-w-md bg-white dark:bg-gray-900 p-8 rounded-lg shadow-lg ring-1 ring-gray-900/5 dark:ring-gray-700">
+        <h1 className="text-3xl font-bold text-text-dark dark:text-text-light text-center mb-4">Sign In</h1>
+        <p className="text-sm text-gray-600 dark:text-gray-300 text-center mb-6">Sign in to access your account</p>
+        {error && <p className="text-red-500 text-center mb-4">{error}</p>}
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
             <label
               htmlFor="username"
-              className="block text-gray-600 dark:text-gray-400 text-sm mb-1"
+              className="block text-text-dark dark:text-text-light text-sm font-medium mb-2"
             >
               Username
             </label>
@@ -37,16 +37,16 @@ function LoginForm() {
               type="text"
               name="username"
               id="username"
-              className="w-full border-b-2 border-gray-300 dark:border-gray-600 py-2 px-1 text-gray-900 dark:text-gray-100 bg-transparent focus:border-blue-500 dark:focus:border-blue-400 focus:outline-none"
-              placeholder=" "
+              className="w-full border-b-2 border-primary dark:border-primary-dark py-2 px-3 text-gray-900 dark:text-gray-100 bg-transparent placeholder-gray-500 dark:placeholder-gray-400 focus:border-primary-dark dark:focus:border-primary focus:outline-none transition-colors duration-200"
+              placeholder="Enter your username"
               autoComplete="username"
               required
             />
           </div>
-          <div className="relative mb-6">
+          <div>
             <label
               htmlFor="password"
-              className="block text-gray-600 dark:text-gray-400 text-sm mb-1"
+              className="block text-text-dark dark:text-text-light text-sm font-medium mb-2"
             >
               Password
             </label>
@@ -54,27 +54,17 @@ function LoginForm() {
               type="password"
               name="password"
               id="password"
-              className="w-full border-b-2 border-gray-300 dark:border-gray-600 py-2 px-1 text-gray-900 dark:text-gray-100 bg-transparent focus:border-blue-500 dark:focus:border-blue-400 focus:outline-none"
-              placeholder=" "
+              className="w-full border-b-2 border-primary dark:border-primary-dark py-2 px-3 text-gray-900 dark:text-gray-100 bg-transparent placeholder-gray-500 dark:placeholder-gray-400 focus:border-primary-dark dark:focus:border-primary focus:outline-none transition-colors duration-200"
+              placeholder="Enter your password"
               required
             />
           </div>
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-colors duration-200"
+            className="w-full bg-primary text-white py-2 rounded-md hover:bg-primary-dark dark:bg-primary-dark dark:hover:bg-primary transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-primary-dark"
           >
             Log In
           </button>
-          <p className="mt-4 text-sm text-center text-gray-600 dark:text-gray-400">
-            Don’t have an account?{' '}
-            <a
-              href="#!"
-              className="font-semibold text-blue-500 hover:underline dark:text-blue-400"
-            >
-              Sign up
-            </a>
-            .
-          </p>
         </form>
       </div>
     </div>

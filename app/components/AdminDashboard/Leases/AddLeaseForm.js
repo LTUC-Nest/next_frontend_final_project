@@ -3,29 +3,22 @@ import useResourceTenants from "@/app/customeHook/tenants";
 import useResourcesLeases from "@/app/customeHook/leases";
 
 import { useState, useEffect } from "react";
- 
 
 export default function Modal({ onClose }) {
   const { fetchPropertiesData } = useResourceProperty();
   const { fetchTenantsData } = useResourceTenants();
-  const {createdLeaseData} = useResourcesLeases()
+  const { createdLeaseData } = useResourcesLeases();
 
   let [tenants, setTenants] = useState([]);
   let [properties, setProperties] = useState([]);
 
   useEffect(() => {
     setProperties(fetchPropertiesData);
-    properties.map((propety) => {
-      console.log(propety.name);
-    });
-  });
+  }, [fetchPropertiesData]);
 
   useEffect(() => {
     setTenants(fetchTenantsData);
-    tenants.map((tenant) => {
-      console.log(tenant.username);
-    });
-  });
+  }, [fetchTenantsData]);
 
   if (!properties) {
     properties = [];
@@ -40,10 +33,10 @@ export default function Modal({ onClose }) {
     const tenantSelectedValue = tenantSelect.value;
 
     const propertySelect = e.target.elements.property;
-    const propertySelectedValue = propertySelect.value
+    const propertySelectedValue = propertySelect.value;
 
-    const paymentSelect = e.target.elements.paymentSelect
-    const paymentSelectedvalue = paymentSelect.value
+    const paymentSelect = e.target.elements.paymentSelect;
+    const paymentSelectedValue = paymentSelect.value;
 
     const leaseInfo = {
       tenant: tenantSelectedValue,
@@ -52,40 +45,40 @@ export default function Modal({ onClose }) {
       lease_end_date: e.target.elements.lease_end_date.value,
       rent_amount: Number(e.target.elements.rent_amount.value),
       security_deposit: Number(e.target.elements.security_deposite.value),
-      payment_frequency: paymentSelectedvalue,
+      payment_frequency: paymentSelectedValue,
       lease_terms: e.target.elements.lease_terms.value,
-      is_active: true //e.target.elements.is_active.value,
+      is_active: true,
     };
     console.log("--------", leaseInfo);
-    createdLeaseData(leaseInfo)
-    const form = document.getElementById('leaseSumbitionForm')
-    form.reset()
-    onClose()
+    createdLeaseData(leaseInfo);
+    const form = document.getElementById('leaseSubmissionForm');
+    form.reset();
+    onClose();
   };
 
   return (
     <>
       <div className="fixed inset-0 flex items-center justify-center z-50">
-        <div className="bg-black opacity-50 fixed inset-0"></div>
-        <div className="bg-white p-6 rounded shadow-lg relative z-10 w-full max-w-4xl">
-          <h2 className="text-xl font-semibold mb-6">Create Lease</h2>
+        <div className="bg-bg-dark opacity-80 fixed inset-0"></div>
+        <div className="bg-bg-light dark:bg-bg-dark p-6 rounded shadow-md relative z-10 w-full max-w-3xl border border-primary-dark dark:border-primary">
+          <h2 className="text-lg font-semibold mb-4 text-text-dark dark:text-text-light">
+            Create Lease
+          </h2>
 
           <form
             onSubmit={handleCreatingLeases}
-            className="grid grid-cols-1 md:grid-cols-2 gap-2"
-            id='leaseSumbitionForm'
+            className="grid grid-cols-1 md:grid-cols-2 gap-3"
+            id="leaseSubmissionForm"
           >
             {/* Tenant */}
             <div>
-              <label for='tenantSelect'  className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="tenantSelect" className="block text-sm font-medium text-text-dark dark:text-text-light mb-1">
                 Tenant
               </label>
               <select
-                id='tenantSelect'
-                type="text"
+                id="tenantSelect"
                 name="tenant"
-                placeholder="Enter tenant name"
-                className="w-full p-2 border rounded-lg focus:outline-none focus:border-blue-500"
+                className="w-full p-1 border rounded text-sm focus:outline-none focus:border-primary dark:bg-bg-dark dark:border-gray-700 dark:text-text-light"
                 required
               >
                 <option value="">Select Tenant</option>
@@ -99,18 +92,16 @@ export default function Modal({ onClose }) {
 
             {/* Property */}
             <div>
-              <label for='propertySelect'  className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="propertySelect" className="block text-sm font-medium text-text-dark dark:text-text-light mb-1">
                 Property
               </label>
               <select
-                id = 'propertySelect'
+                id="propertySelect"
                 name="property"
-                type="text"
-                placeholder="Enter property name"
-                className="w-full p-2 border rounded-lg focus:outline-none focus:border-blue-500"
+                className="w-full p-1 border rounded text-sm focus:outline-none focus:border-primary dark:bg-bg-dark dark:border-gray-700 dark:text-text-light"
                 required
               >
-                <option value=''>Select Property</option>
+                <option value="">Select Property</option>
                 {properties.map((property) => (
                   <option key={property.id} value={property.id}>
                     {property.name}
@@ -121,62 +112,66 @@ export default function Modal({ onClose }) {
 
             {/* Lease Start Date */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-text-dark dark:text-text-light mb-1">
                 Lease Start Date
               </label>
               <input
                 type="date"
-                name='lease_start_date'
-                className="w-full p-2 border rounded-lg focus:outline-none focus:border-blue-500"
+                name="lease_start_date"
+                className="w-full p-1 border rounded text-sm focus:outline-none focus:border-primary dark:bg-bg-dark dark:border-gray-700 dark:text-text-light"
               />
             </div>
 
             {/* Lease End Date */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-text-dark dark:text-text-light mb-1">
                 Lease End Date
               </label>
               <input
-              name="lease_end_date"
                 type="date"
-                className="w-full p-2 border rounded-lg focus:outline-none focus:border-blue-500"
+                name="lease_end_date"
+                className="w-full p-1 border rounded text-sm focus:outline-none focus:border-primary dark:bg-bg-dark dark:border-gray-700 dark:text-text-light"
               />
             </div>
 
             {/* Rent Amount */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-text-dark dark:text-text-light mb-1">
                 Rent Amount
               </label>
               <input
                 type="number"
-                step='any'
+                step="any"
                 name="rent_amount"
                 placeholder="Enter rent amount"
-                className="w-full p-2 border rounded-lg focus:outline-none focus:border-blue-500"
+                className="w-full p-1 border rounded text-sm focus:outline-none focus:border-primary dark:bg-bg-dark dark:border-gray-700 dark:text-text-light"
               />
             </div>
 
             {/* Security Deposit */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-text-dark dark:text-text-light mb-1">
                 Security Deposit
               </label>
               <input
-                name = 'security_deposite'
                 type="number"
-                step='any'
+                step="any"
+                name="security_deposite"
                 placeholder="Enter security deposit"
-                className="w-full p-2 border rounded-lg focus:outline-none focus:border-blue-500"
+                className="w-full p-1 border rounded text-sm focus:outline-none focus:border-primary dark:bg-bg-dark dark:border-gray-700 dark:text-text-light"
               />
             </div>
 
             {/* Payment Frequency */}
             <div>
-              <label for='paymentSelect' className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="paymentSelect" className="block text-sm font-medium text-text-dark dark:text-text-light mb-1">
                 Payment Frequency
               </label>
-              <select id='paymentSelect'  name='payment' className="w-full p-2 border rounded-lg focus:outline-none focus:border-blue-500">
+              <select
+                id="paymentSelect"
+                name="payment"
+                className="w-full p-1 border rounded text-sm focus:outline-none focus:border-primary dark:bg-bg-dark dark:border-gray-700 dark:text-text-light"
+              >
                 <option value="MONTHLY">Monthly</option>
                 <option value="YEARLY">Yearly</option>
               </select>
@@ -184,35 +179,35 @@ export default function Modal({ onClose }) {
 
             {/* Lease Terms */}
             <div className="col-span-2">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-text-dark dark:text-text-light mb-1">
                 Lease Terms
               </label>
               <textarea
                 name="lease_terms"
                 placeholder="Enter lease terms"
-                className="w-full p-2 border rounded-lg focus:outline-none focus:border-blue-500"
+                className="w-full p-1 border rounded text-sm focus:outline-none focus:border-primary dark:bg-bg-dark dark:border-gray-700 dark:text-text-light"
               />
             </div>
 
             {/* Is Active */}
             <div className="col-span-2 flex items-center">
-              <input name="is_active" type="checkbox" className="mr-2" />
-              <label className="text-sm font-medium text-gray-700">
+              <input name="is_active" type="checkbox" className="mr-1" />
+              <label className="text-sm font-medium text-text-dark dark:text-text-light">
                 Is Active
               </label>
             </div>
 
             {/* Buttons */}
-            <div className="col-span-2 flex justify-end mt-6">
+            <div className="col-span-2 flex justify-end mt-4">
               <button
                 onClick={onClose}
-                className="bg-red-500 text-white py-2 px-4 rounded mr-2 hover:bg-red-600"
+                className="bg-red-500 text-white py-1 px-3 rounded text-sm mr-2 hover:bg-red-600"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
+                className="bg-green-500 text-white py-1 px-3 rounded text-sm hover:bg-green-600"
               >
                 Create Lease
               </button>

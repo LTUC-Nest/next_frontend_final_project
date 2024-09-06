@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import usePropertyResource from '@/app/customeHook/userResourceProperty';
 import { AuthContext } from '@/app/context/authContext';
-import { jwtDecode } from "jwt-decode";
+import { jwtDecode } from 'jwt-decode';
 
 const AddPropertyForm = ({ onClose }) => {
     const { addProperty, successMessage, errorMessage } = usePropertyResource();
@@ -48,10 +48,10 @@ const AddPropertyForm = ({ onClose }) => {
     };
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center p-4 bg-gray-900 bg-opacity-50 z-50">
-            <div className="bg-bg-light dark:bg-bg-dark rounded-lg shadow-lg max-w-lg w-full max-h-screen overflow-y-auto p-6">
+        <div className="fixed inset-0 flex items-center justify-center z-50">
+            <div className="bg-bg-light dark:bg-bg-dark p-6 rounded shadow-md relative w-full max-w-3xl border border-primary-dark dark:border-primary">
                 <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-xl sm:text-2xl font-bold text-text-dark dark:text-text-light">Add New Property</h2>
+                    <h2 className="text-lg font-semibold text-text-dark dark:text-text-light">Add New Property</h2>
                     <button onClick={onClose} className="text-gray-500 hover:text-gray-700 dark:text-text-light dark:hover:text-text-dark">
                         X
                     </button>
@@ -66,9 +66,12 @@ const AddPropertyForm = ({ onClose }) => {
                         {errorMessage}
                     </div>
                 )}
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    {/* Name */}
                     <div>
-                        <label htmlFor="name" className="block text-sm font-medium text-text-dark dark:text-text-light">Name</label>
+                        <label htmlFor="name" className="block text-sm font-medium text-text-dark dark:text-text-light mb-1">
+                            Name
+                        </label>
                         <input
                             id="name"
                             name="name"
@@ -76,11 +79,15 @@ const AddPropertyForm = ({ onClose }) => {
                             value={formData.name}
                             onChange={handleChange}
                             required
-                            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm dark:bg-bg-dark dark:border-gray-600 dark:text-text-light"
+                            className="w-full p-1 border rounded text-sm focus:outline-none focus:border-primary dark:bg-bg-dark dark:border-gray-700 dark:text-text-light"
                         />
                     </div>
+
+                    {/* Address */}
                     <div>
-                        <label htmlFor="address" className="block text-sm font-medium text-text-dark dark:text-text-light">Address</label>
+                        <label htmlFor="address" className="block text-sm font-medium text-text-dark dark:text-text-light mb-1">
+                            Address
+                        </label>
                         <input
                             id="address"
                             name="address"
@@ -88,11 +95,15 @@ const AddPropertyForm = ({ onClose }) => {
                             value={formData.address}
                             onChange={handleChange}
                             required
-                            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm dark:bg-bg-dark dark:border-gray-600 dark:text-text-light"
+                            className="w-full p-1 border rounded text-sm focus:outline-none focus:border-primary dark:bg-bg-dark dark:border-gray-700 dark:text-text-light"
                         />
                     </div>
+
+                    {/* City */}
                     <div>
-                        <label htmlFor="city" className="block text-sm font-medium text-text-dark dark:text-text-light">City</label>
+                        <label htmlFor="city" className="block text-sm font-medium text-text-dark dark:text-text-light mb-1">
+                            City
+                        </label>
                         <input
                             id="city"
                             name="city"
@@ -100,11 +111,15 @@ const AddPropertyForm = ({ onClose }) => {
                             value={formData.city}
                             onChange={handleChange}
                             required
-                            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm dark:bg-bg-dark dark:border-gray-600 dark:text-text-light"
+                            className="w-full p-1 border rounded text-sm focus:outline-none focus:border-primary dark:bg-bg-dark dark:border-gray-700 dark:text-text-light"
                         />
                     </div>
+
+                    {/* State */}
                     <div>
-                        <label htmlFor="state" className="block text-sm font-medium text-text-dark dark:text-text-light">State</label>
+                        <label htmlFor="state" className="block text-sm font-medium text-text-dark dark:text-text-light mb-1">
+                            State
+                        </label>
                         <input
                             id="state"
                             name="state"
@@ -112,11 +127,15 @@ const AddPropertyForm = ({ onClose }) => {
                             value={formData.state}
                             onChange={handleChange}
                             required
-                            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm dark:bg-bg-dark dark:border-gray-600 dark:text-text-light"
+                            className="w-full p-1 border rounded text-sm focus:outline-none focus:border-primary dark:bg-bg-dark dark:border-gray-700 dark:text-text-light"
                         />
                     </div>
+
+                    {/* Postal Code */}
                     <div>
-                        <label htmlFor="postal_code" className="block text-sm font-medium text-text-dark dark:text-text-light">Postal Code</label>
+                        <label htmlFor="postal_code" className="block text-sm font-medium text-text-dark dark:text-text-light mb-1">
+                            Postal Code
+                        </label>
                         <input
                             id="postal_code"
                             name="postal_code"
@@ -124,11 +143,15 @@ const AddPropertyForm = ({ onClose }) => {
                             value={formData.postal_code}
                             onChange={handleChange}
                             required
-                            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm dark:bg-bg-dark dark:border-gray-600 dark:text-text-light"
+                            className="w-full p-1 border rounded text-sm focus:outline-none focus:border-primary dark:bg-bg-dark dark:border-gray-700 dark:text-text-light"
                         />
                     </div>
+
+                    {/* Country */}
                     <div>
-                        <label htmlFor="country" className="block text-sm font-medium text-text-dark dark:text-text-light">Country</label>
+                        <label htmlFor="country" className="block text-sm font-medium text-text-dark dark:text-text-light mb-1">
+                            Country
+                        </label>
                         <input
                             id="country"
                             name="country"
@@ -136,18 +159,22 @@ const AddPropertyForm = ({ onClose }) => {
                             value={formData.country}
                             onChange={handleChange}
                             required
-                            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm dark:bg-bg-dark dark:border-gray-600 dark:text-text-light"
+                            className="w-full p-1 border rounded text-sm focus:outline-none focus:border-primary dark:bg-bg-dark dark:border-gray-700 dark:text-text-light"
                         />
                     </div>
+
+                    {/* Property Type */}
                     <div>
-                        <label htmlFor="property_type" className="block text-sm font-medium text-text-dark dark:text-text-light">Property Type</label>
+                        <label htmlFor="property_type" className="block text-sm font-medium text-text-dark dark:text-text-light mb-1">
+                            Property Type
+                        </label>
                         <select
                             id="property_type"
                             name="property_type"
                             value={formData.property_type}
                             onChange={handleChange}
                             required
-                            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm dark:bg-bg-dark dark:border-gray-600 dark:text-text-light"
+                            className="w-full p-1 border rounded text-sm focus:outline-none focus:border-primary dark:bg-bg-dark dark:border-gray-700 dark:text-text-light"
                         >
                             <option value="APARTMENT">Apartment</option>
                             <option value="HOUSE">House</option>
@@ -157,8 +184,12 @@ const AddPropertyForm = ({ onClose }) => {
                             <option value="OTHER">Other</option>
                         </select>
                     </div>
+
+                    {/* Available From */}
                     <div>
-                        <label htmlFor="available_from" className="block text-sm font-medium text-text-dark dark:text-text-light">Available From</label>
+                        <label htmlFor="available_from" className="block text-sm font-medium text-text-dark dark:text-text-light mb-1">
+                            Available From
+                        </label>
                         <input
                             id="available_from"
                             name="available_from"
@@ -166,22 +197,24 @@ const AddPropertyForm = ({ onClose }) => {
                             value={formData.available_from}
                             onChange={handleChange}
                             required
-                            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm dark:bg-bg-dark dark:border-gray-600 dark:text-text-light"
+                            className="w-full p-1 border rounded text-sm focus:outline-none focus:border-primary dark:bg-bg-dark dark:border-gray-700 dark:text-text-light"
                         />
                     </div>
-                    <div className="flex justify-end space-x-4">
-                        <button
-                            type="submit"
-                            className="px-4 py-2 bg-primary text-white rounded-md shadow-sm hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-                        >
-                            Add Property
-                        </button>
+
+                    {/* Buttons */}
+                    <div className="col-span-2 flex justify-end mt-4 space-x-2">
                         <button
                             type="button"
                             onClick={onClose}
-                            className="px-4 py-2 bg-gray-500 text-white rounded-md shadow-sm hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+                            className="bg-red-500 text-white py-1 px-3 rounded text-sm hover:bg-red-600"
                         >
                             Cancel
+                        </button>
+                        <button
+                            type="submit"
+                            className="bg-green-500 text-white py-1 px-3 rounded text-sm hover:bg-green-600"
+                        >
+                            Add Property
                         </button>
                     </div>
                 </form>

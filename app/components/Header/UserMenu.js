@@ -64,13 +64,13 @@ const UserMenu = ({ handleLogout }) => {
               <Menu.Item>
                 {({ active }) => (
                   <a
-                    href="#"
+                    href="/Dashboard"
                     className={classNames(
                       'block px-4 py-2 text-sm text-text-dark',
                       { 'bg-gray-100': active }
                     )}
                   >
-                    Settings
+                    Dashboard
                   </a>
                 )}
               </Menu.Item>

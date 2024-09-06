@@ -66,18 +66,25 @@ const EditPropertyForm = ({ propertyId, onClose, fetchProperties }) => {
     }
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center p-4 bg-gray-900 bg-opacity-50 z-50">
-            <div className="bg-bg-light dark:bg-bg-dark rounded-lg shadow-lg max-w-lg w-full max-h-screen overflow-y-auto p-6">
+        <div className="fixed inset-0 flex items-center justify-center z-50">
+            <div className="bg-bg-light dark:bg-bg-dark p-6 rounded shadow-md relative w-full max-w-3xl border border-primary-dark dark:border-primary">
                 <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-xl sm:text-2xl font-bold text-text-dark dark:text-text-light">Edit Property</h2>
+                    <h2 className="text-lg font-semibold text-text-dark dark:text-text-light">Edit Property</h2>
                     <button onClick={onClose} className="text-gray-500 hover:text-gray-700 dark:text-text-light dark:hover:text-text-dark">
                         X
                     </button>
                 </div>
-                <form onSubmit={handleSubmit} className="space-y-4">
+                {error && (
+                    <div className="mb-4 p-4 bg-red-100 text-red-700 border border-red-300 rounded-md dark:bg-red-800 dark:text-red-200 dark:border-red-700">
+                        {error}
+                    </div>
+                )}
+                <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     {['name', 'city', 'address', 'state', 'country'].map((field) => (
                         <div key={field}>
-                            <label htmlFor={field} className="block text-sm font-medium text-text-dark dark:text-text-light capitalize">{field}</label>
+                            <label htmlFor={field} className="block text-sm font-medium text-text-dark dark:text-text-light capitalize">
+                                {field}
+                            </label>
                             <input
                                 id={field}
                                 name={field}
@@ -85,7 +92,7 @@ const EditPropertyForm = ({ propertyId, onClose, fetchProperties }) => {
                                 value={formData[field] || ''}
                                 onChange={handleChange}
                                 required
-                                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm dark:bg-bg-dark dark:border-gray-600 dark:text-text-light"
+                                className="w-full p-1 border rounded text-sm focus:outline-none focus:border-primary dark:bg-bg-dark dark:border-gray-700 dark:text-text-light"
                             />
                         </div>
                     ))}
@@ -98,7 +105,7 @@ const EditPropertyForm = ({ propertyId, onClose, fetchProperties }) => {
                             value={formData.available_from || ''}
                             onChange={handleChange}
                             required
-                            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm dark:bg-bg-dark dark:border-gray-600 dark:text-text-light"
+                            className="w-full p-1 border rounded text-sm focus:outline-none focus:border-primary dark:bg-bg-dark dark:border-gray-700 dark:text-text-light"
                         />
                     </div>
                     <div>
@@ -109,7 +116,7 @@ const EditPropertyForm = ({ propertyId, onClose, fetchProperties }) => {
                             value={formData.property_type}
                             onChange={handleChange}
                             required
-                            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm dark:bg-bg-dark dark:border-gray-600 dark:text-text-light"
+                            className="w-full p-1 border rounded text-sm focus:outline-none focus:border-primary dark:bg-bg-dark dark:border-gray-700 dark:text-text-light"
                         >
                             <option value="APARTMENT">Apartment</option>
                             <option value="HOUSE">House</option>
@@ -126,22 +133,22 @@ const EditPropertyForm = ({ propertyId, onClose, fetchProperties }) => {
                             name="description"
                             value={formData.description || ''}
                             onChange={handleChange}
-                            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm dark:bg-bg-dark dark:border-gray-600 dark:text-text-light"
+                            className="w-full p-1 border rounded text-sm focus:outline-none focus:border-primary dark:bg-bg-dark dark:border-gray-700 dark:text-text-light"
                         />
                     </div>
-                    <div className="flex justify-end space-x-4">
-                        <button
-                            type="submit"
-                            className="px-4 py-2 bg-primary text-white rounded-md shadow-sm hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-                        >
-                            Save
-                        </button>
+                    <div className="col-span-2 flex justify-end mt-4 space-x-2">
                         <button
                             type="button"
                             onClick={onClose}
-                            className="px-4 py-2 bg-gray-500 text-white rounded-md shadow-sm hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+                            className="bg-gray-500 text-white py-1 px-3 rounded text-sm hover:bg-gray-600"
                         >
                             Cancel
+                        </button>
+                        <button
+                            type="submit"
+                            className="bg-green-500 text-white py-1 px-3 rounded text-sm hover:bg-green-600"
+                        >
+                            Save
                         </button>
                     </div>
                 </form>

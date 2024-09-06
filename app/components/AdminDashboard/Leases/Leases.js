@@ -2,7 +2,7 @@
 import { AuthContext } from "@/app/context/authContext"
 import useResource from "@/app/customeHook/leases"
 import { useContext, useEffect, useState } from "react"
-import Modal from "./addLeaseForm"
+import Modal from "./AddLeaseForm"
 
 
 export default function Leases(){
