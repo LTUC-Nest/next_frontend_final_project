@@ -5,6 +5,7 @@ import { AuthContext } from "./context/authContext";
 import AdminDashboard from "./components/adminDashbord/adminDashbord";
 import UserDashborde from "./components/userDashbord/userDashbord";
 import { jwtDecode } from "jwt-decode";
+import UserDashboard from "./components/userDashbord/userDashbord";
 export default function Home() {
   const { tokens, logout } = useContext(AuthContext);
 
@@ -19,7 +20,8 @@ export default function Home() {
       return (
         <>
        
-          <AdminDashboard />
+          {/* <AdminDashboard /> */}
+          <UserDashboard />
         </>
       );
     } else {
