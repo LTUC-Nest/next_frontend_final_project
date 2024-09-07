@@ -4,7 +4,8 @@ import useResourcesLeases from "@/app/customeHook/leases";
 
 import { useState, useEffect } from "react";
 
-export default function Modal({ onClose }) {
+export default function CreateModal({ onClose }) {
+  // get the data to fill-out the dropdown menu of tenants, and properties
   const { fetchPropertiesData } = useResourceProperty();
   const { fetchTenantsData } = useResourceTenants();
   const { createdLeaseData } = useResourcesLeases();
@@ -14,11 +15,11 @@ export default function Modal({ onClose }) {
 
   useEffect(() => {
     setProperties(fetchPropertiesData);
-  }, [fetchPropertiesData]);
+  });
 
   useEffect(() => {
     setTenants(fetchTenantsData);
-  }, [fetchTenantsData]);
+  });
 
   if (!properties) {
     properties = [];
@@ -36,7 +37,10 @@ export default function Modal({ onClose }) {
     const propertySelectedValue = propertySelect.value;
 
     const paymentSelect = e.target.elements.paymentSelect;
-    const paymentSelectedValue = paymentSelect.value;
+    const paymentSelectedvalue = paymentSelect.value;
+
+    const checkbox = document.getElementById("activeCheckBox");
+    const checkboxValue = checkbox.checked ? true : false;
 
     const leaseInfo = {
       tenant: tenantSelectedValue,
@@ -45,13 +49,14 @@ export default function Modal({ onClose }) {
       lease_end_date: e.target.elements.lease_end_date.value,
       rent_amount: Number(e.target.elements.rent_amount.value),
       security_deposit: Number(e.target.elements.security_deposite.value),
-      payment_frequency: paymentSelectedValue,
+      payment_frequency: paymentSelectedvalue,
       lease_terms: e.target.elements.lease_terms.value,
-      is_active: true,
+      is_active: checkboxValue,
     };
+
     console.log("--------", leaseInfo);
     createdLeaseData(leaseInfo);
-    const form = document.getElementById('leaseSubmissionForm');
+    const form = document.getElementById("leaseSumbitionForm");
     form.reset();
     onClose();
   };
@@ -68,11 +73,14 @@ export default function Modal({ onClose }) {
           <form
             onSubmit={handleCreatingLeases}
             className="grid grid-cols-1 md:grid-cols-2 gap-3"
-            id="leaseSubmissionForm"
+            id="leaseSumbitionForm"
           >
             {/* Tenant */}
             <div>
-              <label htmlFor="tenantSelect" className="block text-sm font-medium text-text-dark dark:text-text-light mb-1">
+              <label
+                htmlFor="tenantSelect"
+                className="block text-sm font-medium text-text-dark dark:text-text-light mb-1"
+              >
                 Tenant
               </label>
               <select
@@ -92,7 +100,10 @@ export default function Modal({ onClose }) {
 
             {/* Property */}
             <div>
-              <label htmlFor="propertySelect" className="block text-sm font-medium text-text-dark dark:text-text-light mb-1">
+              <label
+                htmlFor="propertySelect"
+                className="block text-sm font-medium text-text-dark dark:text-text-light mb-1"
+              >
                 Property
               </label>
               <select
@@ -164,7 +175,10 @@ export default function Modal({ onClose }) {
 
             {/* Payment Frequency */}
             <div>
-              <label htmlFor="paymentSelect" className="block text-sm font-medium text-text-dark dark:text-text-light mb-1">
+              <label
+                htmlFor="paymentSelect"
+                className="block text-sm font-medium text-text-dark dark:text-text-light mb-1"
+              >
                 Payment Frequency
               </label>
               <select
@@ -191,7 +205,7 @@ export default function Modal({ onClose }) {
 
             {/* Is Active */}
             <div className="col-span-2 flex items-center">
-              <input name="is_active" type="checkbox" className="mr-1" />
+              <input id="activeCheckBox" name="is_active" type="checkbox" className="mr-1" />
               <label className="text-sm font-medium text-text-dark dark:text-text-light">
                 Is Active
               </label>

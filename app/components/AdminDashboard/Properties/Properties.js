@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTh, faList } from '@fortawesome/free-solid-svg-icons';
-import EditPropertyForm from './EditPropertyForm';
-import AddPropertyForm from './AddPropertyForm';
+import UpdateModal from './UpdateModal';
+import CreateModal from './CreateModal';
 import usePropertyResource from '@/app/customeHook/userResourceProperty';
 
 // Reusable Message Component
@@ -191,7 +191,7 @@ const Properties = () => {
                 <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
                     <div className="bg-bg-light dark:bg-bg-dark p-8 rounded-lg shadow-lg w-full max-w-lg">
                         <h2 className="text-xl font-semibold mb-4 text-text-dark dark:text-text-light">Edit Property</h2>
-                        <EditPropertyForm propertyId={editPropertyId} onClose={handleCloseEditForm} fetchProperties={fetchProperties} />
+                        <UpdateModal propertyId={editPropertyId} onClose={handleCloseEditForm} fetchProperties={fetchProperties} />
                     </div>
                 </div>
             )}
@@ -200,7 +200,7 @@ const Properties = () => {
                 <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
                     <div className="bg-bg-light dark:bg-bg-dark p-8 rounded-lg shadow-lg w-full max-w-lg">
                         <h2 className="text-xl font-semibold mb-4 text-text-dark dark:text-text-light">Add Property</h2>
-                        <AddPropertyForm onClose={handleCloseAddForm} />
+                        <CreateModal onClose={handleCloseAddForm} />
                     </div>
                 </div>
             )}

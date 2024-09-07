@@ -3,7 +3,7 @@ import usePropertyResource from '@/app/customeHook/userResourceProperty';
 import { AuthContext } from '@/app/context/authContext';
 import { jwtDecode } from 'jwt-decode';
 
-const AddPropertyForm = ({ onClose }) => {
+const CreateModal = ({ onClose }) => {
     const { addProperty, successMessage, errorMessage } = usePropertyResource();
     const { tokens } = useContext(AuthContext);
 
@@ -223,4 +223,4 @@ const AddPropertyForm = ({ onClose }) => {
     );
 };
 
-export default AddPropertyForm;
+export default CreateModal;

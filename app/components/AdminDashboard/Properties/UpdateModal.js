@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 
-const EditPropertyForm = ({ propertyId, onClose, fetchProperties }) => {
+const UpdateModal = ({ propertyId, onClose, fetchProperties }) => {
     const [propertyData, setPropertyData] = useState(null);
     const [formData, setFormData] = useState({
         name: '',
@@ -157,4 +157,4 @@ const EditPropertyForm = ({ propertyId, onClose, fetchProperties }) => {
     );
 };
 
-export default EditPropertyForm;
+export default UpdateModal;

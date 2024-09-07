@@ -4,7 +4,7 @@ import useSWR from "swr";
 
 
 export default function useResourcesLeases(){
-  const apiEndPoint = 'http://127.0.0.1:8000/api/v1/leaseAgreement/'
+  const apiEndPoint = 'http://127.0.0.1:8000/api/v1/leaseAgreement/names/'
   const {tokens} = useContext(AuthContext);
   const {data,err,mutate} = useSWR([apiEndPoint,tokens],fetchResource);
 
@@ -30,12 +30,12 @@ export default function useResourcesLeases(){
     try{
       const res = await fetch(apiEndPoint,config())
       const jsonRes = res.json()
-      console.log(jsonRes)
       return jsonRes
     } catch(err){
       console.log(`error fetch data, ${err}`)
     }
   }
+
 
   async function deleteResource(id){
     if (!tokens){
@@ -43,7 +43,7 @@ export default function useResourcesLeases(){
     }
     try{
       console.log(id)
-      const url = apiEndPoint+id
+      const url = "http://127.0.0.1:8000/api/v1/leaseAgreement/"+id
       const options = config()
       options.method = 'DELETE'
       await fetch(url,options)
@@ -54,7 +54,7 @@ export default function useResourcesLeases(){
     }
   }
 
-  async function createResource(petInfo){
+  async function createResource(leaseInfo){
     if (!tokens){
       return
     }
@@ -62,7 +62,7 @@ export default function useResourcesLeases(){
       const options = config()
       const url = 'http://127.0.0.1:8000/api/v1/leaseAgreement/create/';
       options.method = 'POST'
-      options.body = JSON.stringify(petInfo)
+      options.body = JSON.stringify(leaseInfo)
       await fetch(url,options)
       mutate()
 
@@ -71,10 +71,40 @@ export default function useResourcesLeases(){
     }
   }
 
+  async function updateResource(leaseId,leaseInfo){
+    if (!tokens){
+      return
+    } try{
+      const options = config()
+      const url = `http://127.0.0.1:8000/api/v1/leaseAgreement/${leaseId}`
+      options.method = 'PUT'
+      options.body = JSON.stringify(leaseInfo)
+      await fetch(url,options)
+      mutate()
+    } catch(err){
+      console.log('error happend during modifying the data')
+    }
+  }
+
+  async function retrieveResource(id){
+    if (!tokens){
+      return
+    } try{
+      const url = `http://127.0.0.1:8000/api/v1/leaseAgreement/${id}`
+      const res = await fetch(url,config())
+      const jsonRes = res.json()
+      console.log(jsonRes)
+      return jsonRes
+    } catch(err){
+      console.log('error happend during retrieving the data')
+    }
+  }
   return {
     fetchedLeasesData : data,
     deleteLeaseData : deleteResource,
     createdLeaseData : createResource, 
+    updatedLeaseData : updateResource,
+    retrieveLeaseData : retrieveResource,
     loading: tokens && !err && !data,
     error : err
 
