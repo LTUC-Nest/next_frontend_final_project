@@ -6,7 +6,7 @@ import useResourceTenants from "@/app/customeHook/tenants";
 import CreateModal from "./addLeaseForm";
 import UpdateModal from "./updateLeaseForm";
 import useResourceProperty from "@/app/customeHook/property";
-import MoreInfo from "./moreInfo";
+import InfoModal from "./moreInfo";
 
 export default function Leases() {
   const {
@@ -26,7 +26,7 @@ export default function Leases() {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [showDeleteModel, setDeleteModal] = useState(false);
- 
+
   const [retrievedData, setRetrievedData] = useState({});
 
   const createLease = () => {
@@ -44,11 +44,12 @@ export default function Leases() {
     setShowUpdateModal(false);
   };
 
-
-
-  
-
-
+  const [showInfoModal, setShowInfoModal] = useState(false);
+  const [selectedLease, setSelectedLease] = useState(null);
+  const handleRowClick = (lease) => {
+    setSelectedLease(lease); // Store the clicked row's lease data
+    setShowInfoModal(true); // Show the modal
+  };
 
   const handleUpdateForm = (id) => {
     const data = retrieveLeaseData(id);
@@ -79,7 +80,7 @@ export default function Leases() {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="size-6 size-8 m-2 ml-auto rounded ml-auto hover:bg-green-500 cursor-pointer"
+          className="w-12 h-12 m-2 p-2 ml-auto bg-green-500 text-white rounded-full hover:bg-green-600 cursor-pointer transition-all duration-300 shadow-md"
         >
           <path
             strokeLinecap="round"
@@ -117,55 +118,82 @@ export default function Leases() {
                 <tr
                   key={index}
                   class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 cursor-pointer hover:bg-red-100"
+                  onDoubleClick={() => handleRowClick(lease)}
                 >
                   <th
                     scope="row"
                     class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                   >
-                    {lease.tenant}
+                    {lease.tenant_name}
                   </th>
-                  <td class="px-6 py-4">{lease.property}</td>
+                  <td class="px-6 py-4">{lease.property_name}</td>
 
                   <td class="px-6 py-4">{lease.lease_start_date}</td>
                   <td class="px-6 py-4">{lease.lease_end_date}</td>
                   <td class="px-6 py-4">{lease.is_active ? "🟢" : "🔴"}</td>
                   <td class="px-6 py-4">
-                    <a
-                      href="#"
-                      onClick={() => {
-                        handleUpdateForm(lease.id);
-                      }}
-                      class="mr-1 font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                    <button
+                      onClick={() => handleUpdateForm(lease.id)}
+                      className="mr-2 p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 cursor-pointer transition-all duration-300 shadow-md"
                     >
-                      Edit
-                    </a>
-                    <a
-                      href="#"
-                      onClick={() => {
-                        deleteLeaseData(lease.id);
-                      }}
-                      class="ml-1 font-medium text-red-600 dark:text-blue-500 hover:underline"
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-5 h-5"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M16.862 2.487a2.25 2.25 0 0 1 3.182 3.182L7.878 17.835l-4.28 1.045 1.044-4.279L16.862 2.487z"
+                        />
+                      </svg>
+                    </button>
+
+                    <button
+                      onClick={() => deleteLeaseData(lease.id)}
+                      className="ml-2 p-2 bg-red-500 text-white rounded-full hover:bg-red-600 cursor-pointer transition-all duration-300 shadow-md"
                     >
-                      Delete
-                    </a>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-5 h-5"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </button>
                   </td>
                 </tr>
               );
             })}
-
-
-            
           </tbody>
         </table>
       </div>
+      {showInfoModal && selectedLease && (
+        <InfoModal
+          lease={selectedLease}
+          onClose={() => setShowInfoModal(false)}
+        />
+      )}
       {showCreateModal && <CreateModal onClose={closeCreateModal} />}
-            {showUpdateModal && (
-              <UpdateModal
-                onClose={closeUpdateModel}
-                preFilledLeaseInfo={retrievedData}
-                />
-                
-            )}
+      {showUpdateModal && (
+        <UpdateModal
+          onClose={closeUpdateModel}
+          preFilledLeaseInfo={retrievedData}
+        
+        />
+      
+      )}
+      
     </>
   );
 }

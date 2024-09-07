@@ -4,7 +4,7 @@ import useSWR from "swr";
 
 
 export default function useResourcesLeases(){
-  const apiEndPoint = 'http://127.0.0.1:8000/api/v1/leaseAgreement/'
+  const apiEndPoint = 'http://127.0.0.1:8000/api/v1/leaseAgreement/names/'
   const {tokens} = useContext(AuthContext);
   const {data,err,mutate} = useSWR([apiEndPoint,tokens],fetchResource);
 
@@ -36,13 +36,14 @@ export default function useResourcesLeases(){
     }
   }
 
+
   async function deleteResource(id){
     if (!tokens){
       return
     }
     try{
       console.log(id)
-      const url = apiEndPoint+id
+      const url = "http://127.0.0.1:8000/api/v1/leaseAgreement/"+id
       const options = config()
       options.method = 'DELETE'
       await fetch(url,options)
