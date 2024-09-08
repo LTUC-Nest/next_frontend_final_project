@@ -81,7 +81,7 @@ export default function Leases() {
 
   return (
     <>
-      <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+      <div className="p-6 bg-gray-50 dark:bg-gray-900 rounded-lg shadow-md">
         <svg
           onClick={createLease}
           xmlns="http://www.w3.org/2000/svg"
@@ -151,6 +151,7 @@ export default function Leases() {
                       <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                   </button>
+                  
                 </td>
               </tr>
             ))}
