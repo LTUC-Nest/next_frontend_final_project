@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { useContext } from "react";
 import { AuthContext } from "../../context/authContext";
-import LeaseAgreements from "./KanbanContent/page";
+import LeaseAgreements from "./tenantLeases/page";
 
-
-export default function UserDashboard() {
+export default function AdminDashboard() {
   const { logout } = useContext(AuthContext);
   const [activePage, setActivePage] = useState("dashboard");
 
