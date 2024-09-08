@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useContext } from "react";
 import { AuthContext } from "../../context/authContext";
+import DashboardContent from "./DashboardContent/page";
 
 
 export default function AdminDashboard() {
@@ -288,7 +289,7 @@ export default function AdminDashboard() {
   );
 }
 
-const DashboardContent = () => <div>Dashboard Content</div>;
+// const DashboardContent = () => <div>Dashboard Content</div>;
 const Feature1 = () => <div>feature1</div>;
 const Feature2 = () => <div>feature2</div>;
 const Feature3 = () => <div>feature3</div>;
