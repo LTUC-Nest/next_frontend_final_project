@@ -17,7 +17,7 @@ const Tenant = () => {
     const [editTenantId, setEditTenantId] = useState(null);
     const [showEditTenantForm, setShowEditTenantForm] = useState(false);
     const [showAddTenantForm, setShowAddTenantForm] = useState(false);
-    const [viewMode, setViewMode] = useState('grid');
+    const [viewMode, setViewMode] = useState('list');
     const [selectedTenant, setSelectedTenant] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -126,8 +126,6 @@ const Tenant = () => {
                                     <th className="px-6 py-3">Username</th>
                                     <th className="px-6 py-3">First Name</th>
                                     <th className="px-6 py-3">Last Name</th>
-                                    <th className="px-6 py-3">Email</th>
-                                    <th className="px-6 py-3">Phone Number</th>
                                     <th className="px-6 py-3">Address</th>
                                     <th className="px-6 py-3">Actions</th>
                                 </tr>
@@ -138,8 +136,6 @@ const Tenant = () => {
                                         <td className="px-6 py-4 font-medium text-gray-900 dark:text-gray-100">{tenant.username}</td>
                                         <td className="px-6 py-4 text-gray-500 dark:text-gray-400">{tenant.first_name}</td>
                                         <td className="px-6 py-4 text-gray-500 dark:text-gray-400">{tenant.last_name}</td>
-                                        <td className="px-6 py-4 text-gray-500 dark:text-gray-400">{tenant.email}</td>
-                                        <td className="px-6 py-4 text-gray-500 dark:text-gray-400">{tenant.phone_number}</td>
                                         <td className="px-6 py-4 text-gray-500 dark:text-gray-400">{tenant.address}</td>
                                         <td className="px-6 py-4 flex space-x-2">
                                             <button

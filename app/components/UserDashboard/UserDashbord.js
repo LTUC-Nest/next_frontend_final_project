@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { useContext } from "react";
 import { AuthContext } from "@/app/context/authContext";
+import LeaseExpiration from "./LeaseExpiration/LeaseExpiration";
+import LeaseAgreements from "./LeaseAgreements/LeaseAgreements";
+import OverduePaymentNotices from "./OverduePaymentNotices/OverduePaymentNotices";
 
 
 export default function AdminDashboard() {
@@ -16,12 +19,12 @@ export default function AdminDashboard() {
     switch (activePage) {
       case "dashboard":
         return <DashboardContent />;
-      case "Properties":
-        return <Properties />;
-      case "inbox":
-        return <InboxContent />;
-      case "Tenants":
-        return <Tenants />;
+      case "LeaseExpiration":
+        return <LeaseExpiration />;
+      case "LeaseAgreements":
+        return <LeaseAgreements />;
+      case "OverduePaymentNotices":
+        return <OverduePaymentNotices />;
       case "signOut":
         return <SignOutContent />;
       case "leases":
@@ -62,7 +65,7 @@ export default function AdminDashboard() {
             </li>
             <li>
               <a
-                onClick={() => setActivePage("Properties")}
+                onClick={() => setActivePage("LeaseExpiration")}
                 href="#"
                 className="flex items-center p-2 text-text-dark rounded-lg dark:text-text-light hover:bg-primary-light dark:hover:bg-primary-dark group"
               >
@@ -75,12 +78,12 @@ export default function AdminDashboard() {
                 >
                   <path d="M6.143 0H1.857A1.857 1.857 0 0 0 0 1.857v4.286C0 7.169.831 8 1.857 8h4.286A1.857 1.857 0 0 0 8 6.143V1.857A1.857 1.857 0 0 0 6.143 0Zm10 0h-4.286A1.857 1.857 0 0 0 10 1.857v4.286C10 7.169 10.831 8 11.857 8h4.286A1.857 1.857 0 0 0 18 6.143V1.857A1.857 1.857 0 0 0 16.143 0Zm-10 10H1.857A1.857 1.857 0 0 0 0 11.857v4.286C0 17.169.831 18 1.857 18h4.286A1.857 1.857 0 0 0 8 16.143v-4.286A1.857 1.857 0 0 0 6.143 10Zm10 0h-4.286A1.857 1.857 0 0 0 10 11.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 18 16.143v-4.286A1.857 1.857 0 0 0 16.143 10Z" />
                 </svg>
-                <span className="flex-1 ms-3 whitespace-nowrap">Properties</span>
+                <span className="flex-1 ms-3 whitespace-nowrap">Lease Expiration</span>
               </a>
             </li>
             <li>
               <a
-                onClick={() => setActivePage("Tenants")}
+                onClick={() => setActivePage("LeaseAgreements")}
                 href="#"
                 className="flex items-center p-2 text-text-dark rounded-lg dark:text-text-light hover:bg-primary-light dark:hover:bg-primary-dark group"
               >
@@ -93,12 +96,12 @@ export default function AdminDashboard() {
                 >
                   <path d="M14 2a3.963 3.963 0 0 0-1.4.267 6.439 6.439 0 0 1-1.331 6.638A4 4 0 1 0 14 2Zm1 9h-1.264A6.957 6.957 0 0 1 15 15v2a2.97 2.97 0 0 1-.184 1H19a1 1 0 0 0 1-1v-1a5.006 5.006 0 0 0-5-5ZM6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Z" />
                 </svg>
-                <span className="flex-1 ms-3 whitespace-nowrap">Tenants</span>
+                <span className="flex-1 ms-3 whitespace-nowrap">Lease Agreements</span>
               </a>
             </li>
             <li>
               <a
-                onClick={() => setActivePage("leases")}
+                onClick={() => setActivePage("OverduePaymentNotices")}
                 href="#"
                 className="flex items-center p-2 text-text-dark rounded-lg dark:text-text-light hover:bg-primary-light dark:hover:bg-primary-dark group"
               >
@@ -113,7 +116,7 @@ export default function AdminDashboard() {
                   <path d="M6.737 11.061a2.961 2.961 0 0 1 .81-1.515l6.117-6.116A4.839 4.839 0 0 1 16 2.141V2a1.97 1.97 0 0 0-1.933-2H7v5a2 2 0 0 1-2 2H0v11a1.969 1.969 0 0 0 1.933 2h12.134A1.97 1.97 0 0 0 16 18v-3.093l-1.546 1.546c-.413.413-.94.695-1.513.81l-3.4.679a2.947 2.947 0 0 1-1.85-.227 2.96 2.96 0 0 1-1.635-3.257l.681-3.397Z" />
                   <path d="M8.961 16a.93.93 0 0 0 .189-.019l3.4-.679a.961.961 0 0 0 .49-.263l6.118-6.117a2.884 2.884 0 0 0-4.079-4.078l-6.117 6.117a.96.96 0 0 0-.263.491l-.679 3.4A.961.961 0 0 0 8.961 16Zm7.477-9.8a.958.958 0 0 1 .68-.281.961.961 0 0 1 .682 1.644l-.315.315-1.36-1.36.313-.318Zm-5.911 5.911 4.236-4.236 1.359 1.359-4.236 4.237-1.7.339.341-1.699Z" />
                 </svg>
-                <span className="flex-1 ms-3 whitespace-nowrap">Leases</span>
+                <span className="flex-1 ms-3 whitespace-nowrap">Overdue Payment Notices</span>
               </a>
             </li>
             <li>

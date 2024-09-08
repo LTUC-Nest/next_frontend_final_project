@@ -18,7 +18,7 @@ const Properties = () => {
     const [editPropertyId, setEditPropertyId] = useState(null);
     const [showEditPropertyForm, setShowEditPropertyForm] = useState(false);
     const [showAddPropertyForm, setShowAddPropertyForm] = useState(false);
-    const [viewMode, setViewMode] = useState('grid');
+    const [viewMode, setViewMode] = useState('list');
     const [selectedProperty, setSelectedProperty] = useState(null);
 
     const { properties = [], fetchProperties, deleteProperty, successMessage, errorMessage } = usePropertyResource();

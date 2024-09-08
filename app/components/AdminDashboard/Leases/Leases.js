@@ -1,5 +1,5 @@
 import { AuthContext } from "@/app/context/authContext";
-import useResource from "@/app/customeHook/leases";
+import useResource from "@/app/customeHook/Leases";
 import { useContext, useState } from "react";
 import useResourceTenants from "@/app/customeHook/tenants";
 import CreateModal from "./CreateModal";

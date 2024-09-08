@@ -1,6 +1,6 @@
 import useResourceProperty from "@/app/customeHook/property";
 import useResourceTenants from "@/app/customeHook/tenants";
-import useResourcesLeases from "@/app/customeHook/leases";
+import useResourcesLeases from "@/app/customeHook/Leases";
 
 import { useState, useEffect } from "react";
 

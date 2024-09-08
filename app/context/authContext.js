@@ -8,20 +8,35 @@ export const AuthContext = createContext();
 
 // 2. Create the context wrapper
 export default function AuthWrapper({ children }) {
+  // Add a loading state
   const [loading, setLoading] = useState(true);
-  const [globalLoginState, setGlobalLoginState] = useState({
-    tokens: null,
-    login: () => {},
-    logout: () => {}
+
+  // Initialize global state with placeholder functions
+  const [globalLoginState, setGlobalLoginState] = useState(() => {
+    if (typeof window !== "undefined") {
+      const storedTokens = localStorage.getItem('tokens');
+      return {
+        tokens: storedTokens ? JSON.parse(storedTokens) : null,
+        login: () => {},  // Placeholder function
+        logout: () => {}, // Placeholder function
+        refreshAccessToken: () => {}, // Placeholder function for refreshing the token
+      };
+    }
+    return {
+      tokens: null,
+      login: () => {},  // Placeholder function
+      logout: () => {}, // Placeholder function
+      refreshAccessToken: () => {}, // Placeholder function for refreshing the token
+    };
   });
 
   // 3. useEffect to check localStorage and update loading state
   useEffect(() => {
     if (typeof window !== "undefined") {
       const storedTokens = localStorage.getItem('tokens');
-      setGlobalLoginState(prevState => ({
+      setGlobalLoginState((prevState) => ({
         ...prevState,
-        tokens: storedTokens ? JSON.parse(storedTokens) : null
+        tokens: storedTokens ? JSON.parse(storedTokens) : null,
       }));
       setLoading(false); // Set loading to false after tokens are checked
     }
@@ -34,9 +49,10 @@ export default function AuthWrapper({ children }) {
       const res = await axios.post(url, userInfo);
       const tokens = res.data;
 
-      setGlobalLoginState(prevState => ({
+      // Save tokens to state and localStorage
+      setGlobalLoginState((prevState) => ({
         ...prevState,
-        tokens: tokens
+        tokens: tokens,
       }));
 
       if (typeof window !== "undefined") {
@@ -50,9 +66,9 @@ export default function AuthWrapper({ children }) {
   // 5. Define the logout function
   function logout() {
     console.log('Logout button clicked');
-    setGlobalLoginState(prevState => ({
+    setGlobalLoginState((prevState) => ({
       ...prevState,
-      tokens: null
+      tokens: null,
     }));
 
     if (typeof window !== "undefined") {
@@ -60,16 +76,46 @@ export default function AuthWrapper({ children }) {
     }
   }
 
-  // 6. Update context value
+  // 6. Define the refresh token function
+  async function refreshAccessToken() {
+    try {
+      const refreshToken = globalLoginState.tokens?.refresh;
+      if (!refreshToken) throw new Error("No refresh token available");
+
+      const url = 'http://127.0.0.1:8000/api/token/refresh/';
+      const res = await axios.post(url, { refresh: refreshToken });
+      const newAccessToken = res.data.access;
+
+      // Update state and localStorage with the new access token
+      setGlobalLoginState((prevState) => ({
+        ...prevState,
+        tokens: { ...prevState.tokens, access: newAccessToken },
+      }));
+
+      if (typeof window !== "undefined") {
+        const updatedTokens = { ...globalLoginState.tokens, access: newAccessToken };
+        localStorage.setItem("tokens", JSON.stringify(updatedTokens));
+      }
+
+      return newAccessToken;
+    } catch (error) {
+      console.error("Failed to refresh access token", error);
+      logout(); // Logout the user if the refresh fails
+      return null;
+    }
+  }
+
+  // 7. Ensure login/logout functions are updated in the state
   useEffect(() => {
-    setGlobalLoginState(prevState => ({
+    setGlobalLoginState((prevState) => ({
       ...prevState,
       login: login,
-      logout: logout
+      logout: logout,
+      refreshAccessToken: refreshAccessToken,
     }));
   }, []);
 
-  // 7. Display loading spinner or blank screen while loading
+  // 8. Display loading spinner or blank screen while loading
   if (loading) {
     return <LoadingSpinner />; // Use the LoadingSpinner component
   }
