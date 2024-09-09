@@ -3,10 +3,15 @@ import { useContext } from "react";
 import { AuthContext } from "../../context/authContext";
 import TenantContent from "./KanbanContent/page";
 import Leases from "./leasesSec/leases";
-
+import Inbox from "./inbox/inbox";
+import useResourcesComplaints from "@/app/customeHook/complaints";
 export default function AdminDashboard() {
   const { logout } = useContext(AuthContext);
   const [activePage, setActivePage] = useState("dashboard");
+  const {fetchedComplaintsData} = useResourcesComplaints()
+  
+  const messagesNumner = fetchedComplaintsData.length
+  
 
   const renderContent = () => {
     switch (activePage) {
@@ -250,7 +255,7 @@ export default function AdminDashboard() {
                 </svg>
                 <span class="flex-1 ms-3 whitespace-nowrap">Inbox</span>
                 <span class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">
-                  3
+                  {messagesNumner}
                 </span>
               </a>
             </li>
@@ -305,7 +310,7 @@ export default function AdminDashboard() {
       </aside>
 
       <div class="p-12 sm:ml-64">
-        <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-3">
+        <div class="p-4  border-gray-200 rounded-lg dark:border-gray-700 mt-3">
           {renderContent()}
         </div>
       </div>
@@ -315,7 +320,7 @@ export default function AdminDashboard() {
 
 const DashboardContent = () => <div>Dashboard Content</div>;
 const KanbanContent = () => <div>Here You can View you Properties and add new one</div>;
-const InboxContent = () => <div>Inbox Content</div>;
+const InboxContent = () => <Inbox/>
 const UsersContent = () => <div>Users Content</div>;
 const ProductsContent = () => <div>Products Content</div>;
 const SignOutContent = () => <div>Sign Out Content</div>;
