@@ -1,73 +1,92 @@
-import { useContext, useState, useEffect } from 'react';
-import { AuthContext } from '@/app/context/authContext';
-import useSWR from 'swr';
-import { jwtDecode } from 'jwt-decode';
+import { useContext } from "react";
+import axios from "axios";
+import useSWR from "swr";
+import { jwtDecode } from "jwt-decode";
+import { AuthContext } from "../context/authContext";
 
-// Custom hook for user data operations
-export const useUserData = (apiEndPoint) => {
-    const { tokens } = useContext(AuthContext);
-    const [profileImage, setProfileImage] = useState('');
-    const [userId, setUserId] = useState(null);
-
-    useEffect(() => {
-        if (tokens) {
-            try {
-                const decoded = jwtDecode(tokens.access);
-                setUserId(decoded.user_id);
-            } catch (err) {
-                console.log('Error decoding token:', err);
-            }
-        }
-    }, [tokens]);
-
-    const config = () => {
-        return {
+const fetcher = (url, token) =>
+    axios
+        .get(url, {
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + tokens?.access
+                Authorization: `Bearer ${token}`,
+            },
+        })
+        .then((res) => res.data);
+
+const updater = (url, token, data) =>
+    axios
+        .patch(url, data, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+        .then((res) => res.data);
+
+export function useUserData() {
+    const { tokens, refreshAccessToken } = useContext(AuthContext);
+
+    // Decode the JWT token to get the user_id and username
+    let userId, username;
+    if (tokens?.access) {
+        const decodedToken = jwtDecode(tokens.access);
+        userId = decodedToken?.user_id;  // Adjust if your token has a different structure
+        username = decodedToken?.username;  // Adjust if your token has a different structure
+    }
+
+    const { data, error, isLoading, mutate } = useSWR(
+        tokens?.access && userId
+            ? `http://127.0.0.1:8000/api/v1/users/${userId}`
+            : null,
+        (url) => fetcher(url, tokens.access),
+        {
+            onError: async (err) => {
+                if (err.response?.status === 401) {
+                    try {
+                        const newAccessToken = await refreshAccessToken();
+                        if (newAccessToken) {
+                            mutate(); // Revalidate data with new token
+                        }
+                    } catch (refreshError) {
+                        console.error("Failed to refresh token", refreshError);
+                    }
+                }
+            },
+            revalidateOnFocus: false, // Optionally, disable revalidation on focus
+        }
+    );
+
+    // Function to update user data
+    const updateUserData = async (updateData) => {
+        try {
+            if (!tokens?.access || !userId) {
+                throw new Error("No access token or user ID available for updating data");
             }
-        };
-    };
 
-    const fetcher = async (url) => {
-        if (!tokens || !userId) return;
-        try {
-            const res = await fetch(url, config());
-            const jsonRes = await res.json();
-            setProfileImage(jsonRes.profile_picture || 'https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=600');
-            return jsonRes;
+            const updatedUser = await updater(`http://127.0.0.1:8000/api/v1/users/${userId}`, tokens.access, updateData);
+            mutate(updatedUser, false); // Optimistically update the SWR cache
         } catch (err) {
-            console.log('Error fetching data:', err);
-            throw err;
+            console.error("Error updating user data:", err);
+            if (err.response?.status === 401) {
+                try {
+                    const newAccessToken = await refreshAccessToken();
+                    if (newAccessToken) {
+                        const updatedUser = await updater(`http://127.0.0.1:8000/api/v1/users/${userId}`, newAccessToken, updateData);
+                        mutate(updatedUser, false); // Optimistically update the SWR cache
+                    }
+                } catch (refreshError) {
+                    console.error("Failed to refresh token for updating", refreshError);
+                }
+            }
         }
     };
 
-    const { data: userData, error, mutate } = useSWR(userId ? `${apiEndPoint}/${userId}` : null, fetcher);
 
-    const updateResource = async (userInfo) => {
-        if (!tokens || !userId) return;
-        try {
-            const url = `${apiEndPoint}/${userId}`;
-            const options = { ...config(), method: 'PUT', body: JSON.stringify(userInfo) };
-            await fetch(url, options);
-            mutate(); // Revalidate data after update
-        } catch (err) {
-            console.log('Error during updating data:', err);
-        }
+    return {
+        userData: data,
+        loading: isLoading,
+        error,
+        userId,
+        username,
+        updateUserData,
     };
-
-    const retrieveResource = async () => {
-        if (!tokens || !userId) return;
-        try {
-            const url = `${apiEndPoint}/${userId}`;
-            const res = await fetch(url, config());
-            const jsonRes = await res.json();
-            return jsonRes;
-        } catch (err) {
-            console.log('Error during retrieving data:', err);
-            throw err;
-        }
-    };
-
-    return { userData, profileImage, updateResource, retrieveResource, error, loading: !userData && !error };
-};
+}
