@@ -26,6 +26,7 @@ export default function UpdateModal({ onClose,preFilledLeaseInfo }) {
     document.getElementById('rent_amount').value = data.rent_amount;
     document.getElementById('lease_start_date').value = data.lease_start_date;
     document.getElementById('lease_end_date').value = data.lease_end_date; 
+    document.getElementById('last_paid_date').value = data.last_paid_date
     document.getElementById('rent_amount').value = data.rent_amount; 
     document.getElementById('security_deposit').value = data.security_deposit; 
     document.getElementById('lease_terms').value = data.lease_terms; 
@@ -60,6 +61,7 @@ export default function UpdateModal({ onClose,preFilledLeaseInfo }) {
       property: propertySelectedValue,
       lease_start_date: e.target.elements.lease_start_date.value,
       lease_end_date: e.target.elements.lease_end_date.value,
+      last_paid_date: e.target.elements.last_paid_date.value,
       rent_amount: Number(e.target.elements.rent_amount.value),
       security_deposit: Number(e.target.elements.security_deposite.value),
       payment_frequency: paymentSelectedvalue,
@@ -193,7 +195,20 @@ export default function UpdateModal({ onClose,preFilledLeaseInfo }) {
                 required
               />
             </div>
-
+            {/* Last_Paid_Date */}
+           
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+              Last Paid Date
+              </label>
+              <input
+                name="last_paid_date"
+                id='last_paid_date'
+                type="date"
+                className="w-full p-2 border rounded-lg focus:outline-none focus:border-blue-500"
+                required
+              />
+            </div>
             {/* Payment Frequency */}
             <div>
               <label for='paymentSelect' className="block text-sm font-medium text-gray-700 mb-2">
