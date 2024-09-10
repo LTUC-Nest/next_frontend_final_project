@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTh, faList } from '@fortawesome/free-solid-svg-icons';
 import EditTenantForm from './EditTenantForm';
 import AddTenantForm from './AddTenantForm';
-import useTenantResource from '@/app/customeHook/useResourceTenant';
+import useTenantResource from '@/app/customHook/useResourceTenant';
 import InfoModal from './InfoModal';
 
 // Reusable Message Component
@@ -63,9 +63,9 @@ const Tenant = () => {
 
     return (
         <>
-            <div className="p-6 bg-gray-50 dark:bg-gray-900 rounded-lg shadow-md">
+            <div className="animate__animated animate__bounceInUp p-6 bg-gray-50 dark:bg-gray-900 rounded-lg shadow-md">
                 <div className="flex justify-between items-center mb-6">
-                    <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Tenant Management</h2>
+                    <h2 className="text-2xl font-bold text-text-dark dark:text-text-light">Tenant Management</h2>
                     <div className="flex items-center space-x-3">
                         <button
                             onClick={() => handleToggleViewMode('grid')}

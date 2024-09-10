@@ -66,7 +66,7 @@ const UpdateModal = ({ propertyId, onClose, fetchProperties }) => {
     }
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center z-50">
+        <div className="animate__animated animate__bounceInUp fixed inset-0 flex items-center justify-center z-50">
             <div className="bg-bg-light dark:bg-bg-dark p-6 rounded shadow-md relative w-full max-w-3xl border border-primary-dark dark:border-primary">
                 <div className="flex justify-between items-center mb-4">
                     <h2 className="text-lg font-semibold text-text-dark dark:text-text-light">Edit Property</h2>

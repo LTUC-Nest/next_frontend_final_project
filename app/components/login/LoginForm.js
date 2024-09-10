@@ -20,7 +20,7 @@ function LoginForm() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-bg-light dark:bg-bg-dark">
+    <div className="animate__animated animate__bounceIn flex items-center justify-center min-h-screen bg-bg-light dark:bg-bg-dark">
       <div className="w-full max-w-md bg-white dark:bg-gray-900 p-8 rounded-lg shadow-lg ring-1 ring-gray-900/5 dark:ring-gray-700">
         <h1 className="text-3xl font-bold text-text-dark dark:text-text-light text-center mb-4">Sign In</h1>
         <p className="text-sm text-gray-600 dark:text-gray-300 text-center mb-6">Sign in to access your account</p>

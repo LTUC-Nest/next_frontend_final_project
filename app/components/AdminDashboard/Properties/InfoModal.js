@@ -18,7 +18,7 @@ const InfoModal = ({ property, onClose, onEdit, onDelete }) => {
     };
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+        <div className="animate__animated animate__bounceInUp fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg w-full max-w-md mx-4">
                 <div className="flex justify-between items-center p-4 border-b border-gray-200 dark:border-gray-700">
                     <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Property Details</h3>

@@ -1,48 +1,39 @@
 import React from 'react';
-import { isBefore } from 'date-fns';
-import { FaDollarSign, FaRegHandshake, FaCalendarAlt, FaFileAlt, FaExclamationTriangle, FaCheckCircle } from 'react-icons/fa';
+import { FaTimes, FaDollarSign, FaRegHandshake, FaCalendarAlt, FaFileAlt } from 'react-icons/fa';
 
-const LeaseCard = ({ agreement }) => {
-  const today = new Date();
-  const leaseEndDate = new Date(agreement.lease_end_date);
-  const isLeaseExpired = isBefore(leaseEndDate, today);
+const InfoModal = ({ isOpen, onClose, agreement }) => {
+  if (!isOpen) return null;
 
+  // Format dates for better display
   const formatDate = (dateStr) => {
     const date = new Date(dateStr);
     return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
   };
 
   return (
-    <div
-      className={`animate__animated animate__bounceInUp p-6 rounded-lg border shadow-lg transition-transform duration-300 ease-in-out transform hover:scale-105
-        ${isLeaseExpired ? 'bg-red-20 border-red-700 text-red-700 dark:bg-gray-900 dark:border-red-600 dark:text-red-300' : 'bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100'}`}
+    <div 
+      className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-70" 
+      role="dialog" 
+      aria-labelledby="modal-title" 
+      aria-modal="true"
     >
-      <div className="mb-4">
-        <div className="bg-bg-dark text-white p-3 rounded-lg flex items-center">
-          <FaFileAlt className="text-xl mr-2" />
-          <span className="text-xl font-semibold">Lease ID:</span>
-          <span className="ml-2 text-2xl font-bold bg-white text-indigo-600 px-3 py-1 rounded-lg">
-            {agreement.id}
-          </span>
-        </div>
-      </div>
-      <div className={`mt-4 p-2 rounded-lg text-white font-bold text-lg ${isLeaseExpired ? 'bg-red-600 dark:bg-red-700' : 'bg-green-600 dark:bg-green-700'}`}>
-        {isLeaseExpired ? (
-          <div className="flex items-center justify-center">
-            <FaExclamationTriangle className="text-2xl" />
-            <span className="ml-2">Expired</span>
-          </div>
-        ) : (
-          <div className="flex items-center justify-center">
-            <FaCheckCircle className="text-2xl" />
-            <span className="ml-2">Active</span>
-          </div>
-        )}
-      </div>
-
-      {/* Details Section */}
-      <div className="mt-4 bg-gray-100 dark:bg-gray-800 p-4 rounded-lg shadow-lg">
+      <div className="relative bg-white dark:bg-gray-900 p-6 rounded-lg shadow-lg max-w-md w-full">
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 text-gray-500 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100"
+          aria-label="Close modal"
+        >
+          <FaTimes className="text-2xl" />
+        </button>
+        <h2 id="modal-title" className="text-2xl font-semibold mb-4">Lease Details</h2>
         <div className="space-y-4">
+          <div className="bg-gray-100 dark:bg-gray-800 p-3 rounded-lg flex items-center">
+            <FaFileAlt className="text-xl mr-2 text-indigo-600" />
+            <span className="text-xl font-semibold">Lease ID:</span>
+            <span className="ml-2 text-2xl font-bold bg-white text-indigo-600 px-3 py-1 rounded-lg">
+              {agreement.id}
+            </span>
+          </div>
           <div className="flex items-center">
             <FaDollarSign className="text-lg text-gray-600 dark:text-gray-300 mr-2" />
             <p className="text-gray-700 dark:text-gray-300">
@@ -78,4 +69,4 @@ const LeaseCard = ({ agreement }) => {
   );
 };
 
-export default LeaseCard;
+export default InfoModal;

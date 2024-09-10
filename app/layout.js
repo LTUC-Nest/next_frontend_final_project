@@ -7,14 +7,15 @@ import AuthWrapper from './context/authContext'; // تأكد من المسار �
 import { ThemeProvider } from 'next-themes';
 import "./globals.css";
 
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>
+      <body className='bg-bg-light dark:bg-bg-dark'>
         <AuthWrapper>
           <ThemeProvider attribute="class">
           <Header />
-            <main>{children}</main>
+            <main className="pt-16 flex-grow mt-50">{children}</main>
           <Footer />
           </ThemeProvider>
         </AuthWrapper>

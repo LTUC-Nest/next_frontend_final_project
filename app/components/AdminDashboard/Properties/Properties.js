@@ -4,7 +4,7 @@ import { faTh, faList } from '@fortawesome/free-solid-svg-icons';
 import UpdateModal from './UpdateModal';
 import CreateModal from './CreateModal';
 import InfoModal from './InfoModal';
-import usePropertyResource from '@/app/customeHook/userResourceProperty';
+import usePropertyResource from '@/app/customHook/userResourceProperty';
 
 // Reusable Message Component
 const Message = React.memo(({ message, type }) => (
@@ -62,7 +62,7 @@ const Properties = () => {
 
     return (
         <>
-            <div className="p-6 bg-gray-50 dark:bg-gray-900 rounded-lg shadow-md">
+            <div className="animate__animated animate__bounceInUp p-6 bg-gray-50 dark:bg-gray-900 rounded-lg shadow-md">
                 <div className="flex justify-between items-center mb-6">
                     <h2 className="text-2xl font-bold text-text-dark dark:text-text-light">Property Management</h2>
                     <div className="flex items-center space-x-3">

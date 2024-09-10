@@ -1,15 +1,15 @@
 export default function About() {
   return (
     <div>
-      <section className="text-text-light dark:bg-bg-dark">
+      <section className="animate__animated animate__bounceInUp text-text-light dark:bg-bg-dark">
         <div className="flex justify-center text-4xl font-regular py-10">
           Why Us?
         </div>
-        <div className="container px-5 py-12 mx-auto">
-          <div className="flex flex-wrap text-center justify-center">
+        <div className="animate__animated animate__bounceInUp container px-5 py-12 mx-auto">
+          <div className=" flex flex-wrap text-center justify-center">
             <div className="p-4 md:w-1/4 sm:w-1/2">
               <div className="px-4 py-6 transform transition duration-500 hover:scale-110 bg-bg-light dark:bg-bg-dark rounded-lg shadow-md">
-                <div className="flex justify-center">
+                <div className="animate__animated animate__bounceIn flex justify-center">
                   <img
                     src="https://image3.jdomni.in/banner/13062021/58/97/7C/E53960D1295621EFCB5B13F335_1623567851299.png?output-format=webp"
                     className="w-32 mb-3"

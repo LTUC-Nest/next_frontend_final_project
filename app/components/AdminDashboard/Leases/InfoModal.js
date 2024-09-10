@@ -11,7 +11,7 @@ import {
   
   export default function InfoModal({ lease, onClose }) {
     return (
-      <div className="fixed inset-0 flex items-center justify-center z-50">
+      <div className="animate__animated animate__bounceInUp fixed inset-0 flex items-center justify-center z-50">
         <div className="bg-bg-dark opacity-80 fixed inset-0"></div>
         <div className="bg-bg-light dark:bg-bg-dark p-6 rounded shadow-md relative z-10 w-full max-w-3xl border border-primary-dark dark:border-primary">
           <h2 className="text-lg font-semibold mb-4 text-text-dark dark:text-text-light text-center">
@@ -65,7 +65,13 @@ import {
               <strong>Security Deposit:</strong> ${lease.security_deposit}
             </p>
           </div>
-  
+          {/* Last Paid Date */}
+          <div className="flex items-center mb-2">
+          <CalendarIcon className="h-5 w-5 text-text-dark dark:text-text-light mr-2" />
+          <p className="text-text-dark dark:text-text-light">
+            <strong>Last Paid Date:</strong> {lease.last_paid_date}
+          </p>
+        </div>
           {/* Payment Frequency */}
           <div className="flex items-center mb-2">
             <ClockIcon className="h-5 w-5 text-text-dark dark:text-text-light mr-2" />

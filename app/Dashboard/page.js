@@ -21,20 +21,20 @@ export default function Dashbord() {
     if (is_superuser) {
       return (
         <>
-          <AdminDashboard />
+          <AdminDashboard className='animate__animated animate__bounceInUp bg-bg-light dark:bg-bg-dark'/>
         </>
       );
     } else {
       return (
         <>
-          <UserDashborde />
+          <UserDashborde className='animate__animated animate__bounceInUp bg-bg-light dark:bg-bg-dark'/>
         </>
       );
     }
   } else {
     return (
       <>
-        <LoginForm />
+        <LoginForm className='animate__animated animate__bounceInUp bg-bg-light dark:bg-bg-dark'/>
       </>
     );
   }

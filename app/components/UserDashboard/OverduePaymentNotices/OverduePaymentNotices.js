@@ -42,13 +42,13 @@ const OverduePaymentNotices = () => {
     return <p className="text-red-600 text-center font-semibold">{`Error: ${error}`}</p>;
 
   return (
-    <div className="p-6 bg-bg-light dark:bg-bg-dark min-h-screen">
-      <h1 className="text-3xl font-bold mb-6 text-center text-primary dark:text-text-light">
+    <div className="animate__animated animate__bounceInUp relative">
+      <h1 className="text-3xl font-bold mb-6 text-primary dark:text-text-light">
         Overdue Payment Notices
       </h1>
       {overdueLeases.length > 0 ? (
         <>
-          <p className="text-center text-lg text-text-dark dark:text-text-light font-medium mb-8 max-w-2xl mx-auto">
+          <p className="text-lg text-text-dark dark:text-text-light font-medium mb-8  mx-auto">
             To maintain a good standing, please review and settle any overdue payments promptly.
             Avoid additional fees by making your payments on time.
           </p>

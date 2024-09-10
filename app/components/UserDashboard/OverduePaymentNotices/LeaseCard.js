@@ -3,7 +3,7 @@ import React from 'react';
 const LeaseCard = ({ lease }) => {
   return (
     <div
-      className={`bg-white dark:bg-bg-dark shadow-lg rounded-lg overflow-hidden p-6 border-2 ${
+      className={`animate__animated animate__bounceInUp bg-white dark:bg-bg-dark shadow-lg rounded-lg overflow-hidden p-6 border-2 ${
         lease.status === 'Overdue' ? 'border-red-500' : 'border-primary-dark'
       } hover:shadow-xl transition-shadow duration-300 relative`}
     >

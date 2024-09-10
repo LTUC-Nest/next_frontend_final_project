@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import usePropertyResource from '@/app/customeHook/userResourceProperty';
+import usePropertyResource from '@/app/customHook/userResourceProperty';
 import { AuthContext } from '@/app/context/authContext';
 import { jwtDecode } from 'jwt-decode';
 
@@ -48,10 +48,11 @@ const CreateModal = ({ onClose }) => {
     };
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center z-50">
-            <div className="bg-bg-light dark:bg-bg-dark p-6 rounded shadow-md relative w-full max-w-3xl border border-primary-dark dark:border-primary">
+        <div className="animate__animated animate__bounceInUp fixed inset-0 flex items-center justify-center z-50">
+            <div className="bg-bg-dark opacity-80 fixed inset-0"></div>
+            <div className="bg-bg-light dark:bg-bg-dark p-6 rounded shadow-md relative z-10 w-full max-w-3xl border border-primary-dark dark:border-primary">
                 <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-lg font-semibold text-text-dark dark:text-text-light">Add New Property</h2>
+                    <h2 className="text-lg font-semibold mb-4 text-text-dark dark:text-text-light">Add New Property</h2>
                     <button onClick={onClose} className="text-gray-500 hover:text-gray-700 dark:text-text-light dark:hover:text-text-dark">
                         X
                     </button>

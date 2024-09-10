@@ -1,6 +1,6 @@
-import useResourceProperty from "@/app/customeHook/property";
-import useResourceTenants from "@/app/customeHook/tenants";
-import useResourcesLeases from "@/app/customeHook/Leases";
+import useResourceProperty from "@/app/customHook/property";
+import useResourceTenants from "@/app/customHook/tenants";
+import useResourcesLeases from "@/app/customHook/Leases";
 
 import { useState, useEffect } from "react";
 
@@ -47,6 +47,7 @@ export default function CreateModal({ onClose }) {
       property: propertySelectedValue,
       lease_start_date: e.target.elements.lease_start_date.value,
       lease_end_date: e.target.elements.lease_end_date.value,
+      last_paid_date: e.target.elements.last_paid_date.value,
       rent_amount: Number(e.target.elements.rent_amount.value),
       security_deposit: Number(e.target.elements.security_deposite.value),
       payment_frequency: paymentSelectedvalue,
@@ -54,7 +55,6 @@ export default function CreateModal({ onClose }) {
       is_active: checkboxValue,
     };
 
-    console.log("--------", leaseInfo);
     createdLeaseData(leaseInfo);
     const form = document.getElementById("leaseSumbitionForm");
     form.reset();
@@ -63,7 +63,7 @@ export default function CreateModal({ onClose }) {
 
   return (
     <>
-      <div className="fixed inset-0 flex items-center justify-center z-50">
+      <div className="animate__animated animate__bounceInUp fixed inset-0 flex items-center justify-center z-50">
         <div className="bg-bg-dark opacity-80 fixed inset-0"></div>
         <div className="bg-bg-light dark:bg-bg-dark p-6 rounded shadow-md relative z-10 w-full max-w-3xl border border-primary-dark dark:border-primary">
           <h2 className="text-lg font-semibold mb-4 text-text-dark dark:text-text-light">
@@ -172,7 +172,21 @@ export default function CreateModal({ onClose }) {
                 className="w-full p-1 border rounded text-sm focus:outline-none focus:border-primary dark:bg-bg-dark dark:border-gray-700 dark:text-text-light"
               />
             </div>
+            {/* Last_Paid_Date */}
 
+            <div>
+              <label className="block text-sm font-medium text-text-dark dark:text-text-light mb-1">
+              Last Paid Date
+              </label>
+              <input
+                name="last_paid_date"
+                type="date"
+                step="any"
+                placeholder="Last Paid Date"
+                className="w-full p-1 border rounded text-sm focus:outline-none focus:border-primary dark:bg-bg-dark dark:border-gray-700 dark:text-text-light"
+                required
+              />
+            </div>
             {/* Payment Frequency */}
             <div>
               <label

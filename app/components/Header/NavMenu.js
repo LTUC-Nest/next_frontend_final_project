@@ -2,10 +2,9 @@
 import React from 'react';
 import { classNames } from '@/utils/utils';
 
-
 const NavMenu = ({ navigation }) => {
   return (
-    <div className="hidden sm:ml-6 sm:block">
+    <div className="hidden sm:ml-6 sm:block animate__animated animate__bounceIn">
       <div className="flex space-x-4">
         {navigation.map((item) => (
           <a

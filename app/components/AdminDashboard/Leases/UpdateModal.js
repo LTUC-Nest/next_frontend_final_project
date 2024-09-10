@@ -1,6 +1,6 @@
-import useResourceProperty from "@/app/customeHook/property";
-import useResourceTenants from "@/app/customeHook/tenants";
-import useResourcesLeases from "@/app/customeHook/Leases";
+import useResourceProperty from "@/app/customHook/property";
+import useResourceTenants from "@/app/customHook/tenants";
+import useResourcesLeases from "@/app/customHook/Leases";
 
 import { useState, useEffect } from "react";
 
@@ -22,6 +22,7 @@ export default function UpdateModal({ onClose, preFilledLeaseInfo }) {
     document.getElementById('rent_amount').value = data.rent_amount;
     document.getElementById('lease_start_date').value = data.lease_start_date;
     document.getElementById('lease_end_date').value = data.lease_end_date;
+    document.getElementById('last_paid_date').value = data.last_paid_date;
     document.getElementById('security_deposit').value = data.security_deposit;
     document.getElementById('lease_terms').value = data.lease_terms;
     document.getElementById('activeCheckBox').checked = data.is_active;
@@ -41,6 +42,7 @@ export default function UpdateModal({ onClose, preFilledLeaseInfo }) {
       property: e.target.elements.property.value,
       lease_start_date: e.target.elements.lease_start_date.value,
       lease_end_date: e.target.elements.lease_end_date.value,
+      last_paid_date: e.target.elements.last_paid_date.value,
       rent_amount: Number(e.target.elements.rent_amount.value),
       security_deposit: Number(e.target.elements.security_deposit.value),
       payment_frequency: e.target.elements.payment.value,
@@ -96,6 +98,21 @@ export default function UpdateModal({ onClose, preFilledLeaseInfo }) {
           <div>
             <label htmlFor="lease_end_date" className="block text-sm font-medium text-text-dark dark:text-text-light mb-1">Lease End Date</label>
             <input id="lease_end_date" name="lease_end_date" type="date" className="w-full p-1 border rounded text-sm focus:outline-none focus:border-primary dark:bg-bg-dark dark:border-gray-700 dark:text-text-light" required />
+          </div>
+
+          {/* Last_Paid_Date */}
+
+          <div>
+            <label className="block text-sm font-medium text-text-dark dark:text-text-light mb-1">
+              Last Paid Date
+            </label>
+            <input
+              name="last_paid_date"
+              id="last_paid_date"
+              type="date"
+              className="w-full p-1 border rounded text-sm focus:outline-none focus:border-primary dark:bg-bg-dark dark:border-gray-700 dark:text-text-light"
+              required
+            />
           </div>
 
           {/* Rent Amount */}

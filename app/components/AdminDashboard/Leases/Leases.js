@@ -1,12 +1,13 @@
 import { AuthContext } from "@/app/context/authContext";
-import useResource from "@/app/customeHook/Leases";
+import useResource from "@/app/customHook/Leases";
 import { useContext, useState } from "react";
-import useResourceTenants from "@/app/customeHook/tenants";
+import useResourceTenants from "@/app/customHook/tenants";
 import CreateModal from "./CreateModal";
 import UpdateModal from "./UpdateModal";
-import useResourceProperty from "@/app/customeHook/property";
+import useResourceProperty from "@/app/customHook/property";
 import InfoModal from "./InfoModal";
 import DeleteModal from "./DeleteModal";
+import InfoButton from "../../InfoButton";
 
 export default function Leases() {
   const {
@@ -81,7 +82,7 @@ export default function Leases() {
 
   return (
     <>
-      <div className="p-6 bg-gray-50 dark:bg-gray-900 rounded-lg shadow-md">
+      <div className="animate__animated animate__bounceInUp p-6 bg-gray-50 dark:bg-gray-900 rounded-lg shadow-md">
         <svg
           onClick={createLease}
           xmlns="http://www.w3.org/2000/svg"
@@ -151,7 +152,15 @@ export default function Leases() {
                       <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                   </button>
-                  
+                  <button
+                      onClick={() => handleRowClick(lease)}
+                      className="ml-2  bg-green-500 text-white rounded-full hover:bg-green-400 cursor-pointer transition-all duration-300 shadow-md "
+                    >
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+</svg>
+
+                    </button>
                 </td>
               </tr>
             ))}

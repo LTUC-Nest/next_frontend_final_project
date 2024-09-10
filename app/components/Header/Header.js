@@ -46,14 +46,18 @@ export default function Header() {
   };
 
   return (
-    <Disclosure as="nav">
+    <Disclosure as="nav" className="fixed top-0 inset-x-0 bg-bg-light dark:bg-bg-dark shadow-lg z-50">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="relative flex h-16 items-center justify-between">
           <MobileMenuButton />
+
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-            <Logo />
-            <NavMenu navigation={navigation} />
+            <Logo className="h-9" />
+            <div className="hidden sm:block">
+              <NavMenu navigation={navigation} />
+            </div>
           </div>
+
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
             <DarkModeToggle />
             {tokens ? (
@@ -61,14 +65,16 @@ export default function Header() {
             ) : (
               <button
                 onClick={() => router.push('/Dashboard')}
-                className="text-text-dark hover:bg-primary-dark hover:text-bg-light rounded-md px-3 py-2 text-sm font-medium"
+                className="animate__animated animate__backInRight hidden sm:inline-block bg-gradient-to-r from-primary to-primary-dark text-white font-bold py-2 px-6 rounded-full shadow-md hover:shadow-lg hover:from-primary-dark hover:to-primary transition duration-300 ease-in-out transform hover:scale-105"
               >
                 Sign in
               </button>
+
             )}
           </div>
         </div>
       </div>
+
       <MobileMenu
         navigation={navigation}
         isLoggedIn={!!tokens}
@@ -76,5 +82,6 @@ export default function Header() {
         router={router}
       />
     </Disclosure>
+
   );
 }

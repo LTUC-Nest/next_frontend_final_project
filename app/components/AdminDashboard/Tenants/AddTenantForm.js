@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import useTenantResource from '@/app/customeHook/useResourceTenant';
+import useTenantResource from '@/app/customHook/useResourceTenant';
 import { AuthContext } from '@/app/context/authContext';
 import { jwtDecode } from 'jwt-decode';
 
@@ -65,13 +65,11 @@ const AddTenantForm = ({ onClose }) => {
     };
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center z-50">
-            <div className="bg-bg-light dark:bg-bg-dark p-6 rounded shadow-md relative w-full max-w-3xl border border-primary-dark dark:border-primary">
+        <div className="animate__animated animate__bounceInUp fixed inset-0 flex items-center justify-center z-50">
+            <div className="bg-bg-dark opacity-80 fixed inset-0"></div>
+            <div className="bg-bg-light dark:bg-bg-dark p-6 rounded shadow-md relative z-10 w-full max-w-3xl border border-primary-dark dark:border-primary">
                 <div className="flex justify-between items-center mb-4">
                     <h2 className="text-lg font-semibold text-text-dark dark:text-text-light">Add New Tenant</h2>
-                    <button onClick={onClose} className="text-gray-500 hover:text-gray-700 dark:text-text-light dark:hover:text-text-dark">
-                        X
-                    </button>
                 </div>
 
                 {successMessage && (
@@ -242,20 +240,6 @@ const AddTenantForm = ({ onClose }) => {
                             value={formData.emergency_contact_phone}
                             onChange={handleChange}
                             required
-                            className="w-full p-1 border rounded text-sm focus:outline-none focus:border-primary dark:bg-bg-dark dark:border-gray-700 dark:text-text-light"
-                        />
-                    </div>
-
-                    {/* Profile Picture */}
-                    <div>
-                        <label htmlFor="profile_picture" className="block text-sm font-medium text-text-dark dark:text-text-light mb-1">
-                            Profile Picture
-                        </label>
-                        <input
-                            id="profile_picture"
-                            name="profile_picture"
-                            type="file"
-                            onChange={handleChange}
                             className="w-full p-1 border rounded text-sm focus:outline-none focus:border-primary dark:bg-bg-dark dark:border-gray-700 dark:text-text-light"
                         />
                     </div>

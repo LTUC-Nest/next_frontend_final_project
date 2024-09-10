@@ -24,16 +24,19 @@ const MobileMenu = ({ navigation, isLoggedIn, handleLogout, router }) => {
         {isLoggedIn ? (
           <DisclosureButton
             onClick={handleLogout}
-            className="block w-full rounded-md px-3 py-2 text-base font-medium text-text-dark hover:bg-primary-dark hover:text-bg-light"
+            className="w-full bg-gradient-to-r from-primary to-primary-dark text-white font-bold py-3 px-4 rounded-lg shadow-lg hover:shadow-2xl hover:from-primary-dark hover:to-primary transition-all duration-500 ease-in-out transform hover:scale-110 mt-4 animate-slide-in"
           >
             Sign out
           </DisclosureButton>
         ) : (
           <DisclosureButton
-            onClick={() => router.push('/login')}
-            className="block w-full rounded-md px-3 py-2 text-base font-medium text-text-dark hover:bg-primary-dark hover:text-bg-light"
+
+
+            onClick={() => router.push('/Dashboard')}
+            className="w-full bg-gradient-to-r from-primary to-primary-dark text-white font-bold py-3 px-4 rounded-lg shadow-lg hover:shadow-2xl hover:from-primary-dark hover:to-primary transition-all duration-500 ease-in-out transform hover:scale-110 mt-4 animate-slide-in"
           >
             Sign in
+
           </DisclosureButton>
         )}
       </div>
@@ -42,3 +45,4 @@ const MobileMenu = ({ navigation, isLoggedIn, handleLogout, router }) => {
 };
 
 export default MobileMenu;
+

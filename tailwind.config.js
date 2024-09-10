@@ -1,12 +1,15 @@
 /** @type {import('tailwindcss').Config} */
+const flowbite = require("flowbite-react/tailwind");
+
 module.exports = {
   content: [
     "./node_modules/flowbite-react/lib/**/*.js",
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    flowbite.content(),
   ],
-  darkMode: 'selector', 
+  darkMode: 'class', 
   theme: {
     extend: {
       colors: {
@@ -23,10 +26,11 @@ module.exports = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+
     },
   },
-  darkMode: 'class',
-  plugins: [
-    require("flowbite/plugin")
+
+  plugins: [[require("tw-elements/plugin.cjs")],
+  flowbite.plugin(),
   ],
 };
