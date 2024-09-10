@@ -5,7 +5,7 @@ import { AuthContext } from "../context/authContext";
 import useSWR from "swr";
 
 export default function useResourceProperty(){
-  const apiEndPoint = 'http://127.0.0.1:8000/api/v1/properties/'
+  const apiEndPoint = 'https://djang-backend-final-project.onrender.com/api/v1/properties/'
   const {tokens} = useContext(AuthContext);
   const {data,err,mutate} = useSWR([apiEndPoint,tokens],fetchResource);
 
@@ -42,7 +42,7 @@ export default function useResourceProperty(){
     if (!tokens){
       return
     } try{
-      const url = `http://127.0.0.1:8000/api/v1/properties/${id}`
+      const url = `https://djang-backend-final-project.onrender.com/api/v1/properties/${id}`
       const res = await fetch(url,config())
       const jsonRes = res.json()
       console.log(jsonRes)

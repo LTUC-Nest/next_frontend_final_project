@@ -29,34 +29,6 @@ function LoginForm() {
     
   };
 
-
-// ---------------------------------------------------------------------------------------------------------------------- 
-  // const handleRegister = (e) => {
-  //   e.preventDefault();
-  //   if (password !== confirmPassword) {
-  //     alert('Passwords do not match!');
-  //     return;
-  //   }
-  //   if (passwordStrength < 3) {
-  //     alert('Password is too weak!');
-  //     return;
-  //   }
-  // };
-  // const handlePasswordChange = (e) => {
-  //   const newPassword = e.target.value;
-  //   setPassword(newPassword);
-  //   setPasswordStrength(zxcvbn(newPassword).score + 1);
-  // };
-  // const handleConfirmPasswordChange = (e) => {
-  //   setConfirmPassword(e.target.value);
-  // };
-  // const handleToggleForm = () => {
-  //   setIsRegistering(!isRegistering);
-  // };
-// ---------------------------------------------------------------------------------------------------------------------- 
-
-  // const passwordsMatch = password === confirmPassword;
-
   return (
 
 <>

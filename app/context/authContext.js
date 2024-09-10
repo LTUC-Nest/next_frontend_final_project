@@ -7,6 +7,7 @@ export const AuthContext = createContext();
  
 // 2. Create the context wrapper
 export default function AuthWrapper({ children }) {
+  const apiEndPoint = process.env.NEXT_PUBLIC_API_URL
   // Add a loading state
   const [loading, setLoading] = useState(true);
  
@@ -47,7 +48,7 @@ export default function AuthWrapper({ children }) {
     try {
    
  
-      const url = 'http://127.0.0.1:8000/api/token/';
+      const url = 'https://djang-backend-final-project.onrender.com/api/token/';
      
  
       const res = await axios.post(url, userInfo);
@@ -98,7 +99,7 @@ export default function AuthWrapper({ children }) {
       const refreshToken = globalLoginState.tokens?.refresh;
       if (!refreshToken) throw new Error("No refresh token available");
  
-      const url = 'http://127.0.0.1:8000/api/token/refresh/';
+      const url = 'https://djang-backend-final-project.onrender.com/api/token/refresh/';
       const res = await axios.post(url, { refresh: refreshToken });
       const newAccessToken = res.data.access;
  

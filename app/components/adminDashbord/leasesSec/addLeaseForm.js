@@ -48,13 +48,14 @@ export default function CreateModal({ onClose }) {
       property: propertySelectedValue,
       lease_start_date: e.target.elements.lease_start_date.value,
       lease_end_date: e.target.elements.lease_end_date.value,
+      last_paid_date: e.target.elements.last_paid_date.value,
       rent_amount: Number(e.target.elements.rent_amount.value),
       security_deposit: Number(e.target.elements.security_deposite.value),
       payment_frequency: paymentSelectedvalue,
       lease_terms: e.target.elements.lease_terms.value,
       is_active: checkboxValue, // true //
     };
-    console.log("--------", leaseInfo);
+
     createdLeaseData(leaseInfo)
     const form = document.getElementById('leaseSumbitionForm')
     form.reset()
@@ -168,6 +169,20 @@ export default function CreateModal({ onClose }) {
                 type="number"
                 step='any'
                 placeholder="Enter security deposit"
+                className="w-full p-2 border rounded-lg focus:outline-none focus:border-blue-500"
+                required
+              />
+            </div>
+
+            {/* Last_Paid_Date */}
+           
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+              Last Paid Date
+              </label>
+              <input
+                name="last_paid_date"
+                type="date"
                 className="w-full p-2 border rounded-lg focus:outline-none focus:border-blue-500"
                 required
               />
