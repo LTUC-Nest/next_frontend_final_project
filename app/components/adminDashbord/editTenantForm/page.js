@@ -10,7 +10,6 @@ const EditTenantForm = ({ tenantId, onClose, fetchTenant }) => {
         address: '',
         emergency_contact_name: '',
         emergency_contact_phone: '',
-        updated_at: '',
     });
 
     // Fetch tenant data for editing
@@ -32,10 +31,10 @@ const EditTenantForm = ({ tenantId, onClose, fetchTenant }) => {
 
     // Handle form field changes
     const handleChange = (event) => {
-        const { username, value } = event.target;
+        const { name, value } = event.target;
         setFormData(prevData => ({
             ...prevData,
-            [username]: value
+            [name]: value
         }));
     };
 
@@ -43,7 +42,9 @@ const EditTenantForm = ({ tenantId, onClose, fetchTenant }) => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            await axios.put(`http://localhost:8000/api/v1/users/${tenantId}`, formData);
+            await axios.put(`http://localhost:8000/api/v1/users/${tenantId}`, formData, {
+                headers: { 'Content-Type': 'application/json' },
+            });
             fetchTenant();
             onClose(); // Close the form after successful update
         } catch (error) {
@@ -52,9 +53,7 @@ const EditTenantForm = ({ tenantId, onClose, fetchTenant }) => {
     };
 
     if (!tenantData) {
-        return <div>Loading...
-        </div>;
-        
+        return <div>Loading...</div>;
     }
 
     return (
@@ -115,16 +114,6 @@ const EditTenantForm = ({ tenantId, onClose, fetchTenant }) => {
                     type="text"
                     name="emergency_contact_phone"
                     value={formData.emergency_contact_phone || ''}
-                    onChange={handleChange}
-                    className="block w-full mt-1 px-2 py-1 border border-gray-300 rounded-lg"
-                />
-            </label>
-            <label className="block text-sm font-medium text-gray-700">
-                Updated At
-                <input
-                    type="date"
-                    name="updated_at"
-                    value={formData.updated_at || ''}
                     onChange={handleChange}
                     className="block w-full mt-1 px-2 py-1 border border-gray-300 rounded-lg"
                 />

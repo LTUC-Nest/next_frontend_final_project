@@ -10,7 +10,7 @@ const AddTenantForm = ({ onClose }) => {
 
     const decodedToken = jwtDecode(tokens.access);
     const adminId = decodedToken.user_id; // Adjust based on your token structure
-    console.log(adminId);
+    // console.log(adminId);
 
     const [formData, setFormData] = useState({
         username: '',
@@ -23,7 +23,7 @@ const AddTenantForm = ({ onClose }) => {
         date_of_birth: '',
         emergency_contact_name: '',
         emergency_contact_phone: '',
-        profile_picture: null // Use null for file
+       
     });
 
     const handleChange = (e) => {
@@ -36,7 +36,8 @@ const AddTenantForm = ({ onClose }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        console.log('Form submitted with data:', formData);
+    
         const formDataToSend = new FormData();
         for (const key in formData) {
             if (formData[key] !== undefined) {
@@ -44,9 +45,10 @@ const AddTenantForm = ({ onClose }) => {
             }
         }
         formDataToSend.append('admin_id', adminId);
-
+    
         const result = await addTenant(formDataToSend);
-
+        console.log('Add Tenant result:', result);
+    
         if (result.success) {
             setFormData({
                 username: '',
@@ -59,11 +61,12 @@ const AddTenantForm = ({ onClose }) => {
                 date_of_birth: '',
                 emergency_contact_name: '',
                 emergency_contact_phone: '',
-                profile_picture: null
+                
             });
             if (onClose) onClose(); // Close form or perform other actions
         }
     };
+    
 
     return (
         <div className="p-6 bg-white rounded-lg shadow-lg max-w-lg mx-auto">
@@ -205,16 +208,7 @@ const AddTenantForm = ({ onClose }) => {
                             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         />
                     </div>
-                    <div className="col-span-2">
-                        <label htmlFor="profile_picture" className="block text-sm font-medium text-gray-700">Profile Picture</label>
-                        <input
-                            id="profile_picture"
-                            name="profile_picture"
-                            type="file"
-                            onChange={handleChange}
-                            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        />
-                    </div>
+                    
                 </div>
 
                 <div className="flex justify-end space-x-4 mt-4">
