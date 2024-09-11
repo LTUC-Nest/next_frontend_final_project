@@ -21,7 +21,7 @@ const LeaseAgreements = () => {
       if (!tokens || !tokens.access) return;
 
       try {
-        const response = await fetch('http://127.0.0.1:8000/api/v1/leaseAgreement/', {
+        const response = await fetch('https://djang-backend-final-project.onrender.com/api/v1/leaseAgreement/', {
           headers: {
             'Authorization': `Bearer ${tokens.access}`,
           },

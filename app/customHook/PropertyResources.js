@@ -2,7 +2,7 @@ import { useState, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../context/authContext';
 
-const usePropertyResource = () => {
+const PropertyResources = () => {
     const { tokens } = useContext(AuthContext);
     const [properties, setProperties] = useState([]);
     const [propertyData, setPropertyData] = useState(null);
@@ -101,4 +101,4 @@ const usePropertyResource = () => {
     };
 };
 
-export default usePropertyResource;
+export default PropertyResources;

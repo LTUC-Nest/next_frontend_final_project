@@ -22,7 +22,7 @@ const LeaseCard = ({ agreement }) => {
           <FaFileAlt className="text-xl mr-2" />
           <span className="text-xl font-semibold">Lease ID:</span>
           <span className="ml-2 text-2xl font-bold bg-white text-indigo-600 px-3 py-1 rounded-lg">
-            {agreement.id}
+            1011{agreement.id}
           </span>
         </div>
       </div>

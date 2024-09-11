@@ -1,33 +1,54 @@
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "@/app/context/authContext";
-import ComplaintsResources from "@/app/customHook/ComplaintsResources";
+import { useState } from "react";
 import ComplaintForm from "./ComplaintForm";
 import ComplaintHistory from "./ComplaintHistory";
-import { jwtDecode } from "jwt-decode";
 
 export default function Complaints() {
-  const { fetchedComplaintsData, createdComplaintData, loading, error } = ComplaintsResources();
-  const { tokens } = useContext(AuthContext);
-  const decodeTokens = jwtDecode(tokens.access);
-  const token_username = decodeTokens.username;
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const [complaintsMessage, setComplaintsMessage] = useState([]);
-
-  useEffect(() => {
-    if (Array.isArray(fetchedComplaintsData)) {
-      setComplaintsMessage(fetchedComplaintsData);
-    } else {
-      setComplaintsMessage([]);
-    }
-  }, [fetchedComplaintsData]);
-
-  if (loading) return <div className="min-h-screen flex items-center justify-center bg-bg-light text-text-dark">Loading...</div>;
-  if (error) return <div className="min-h-screen flex items-center justify-center bg-bg-light text-text-dark">Error loading complaints: {error.message}</div>;
+  // وظيفة لفتح وإغلاق النافذة المنبثقة
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
 
   return (
-    <div className="">
-      <ComplaintForm createdComplaintData={createdComplaintData} />
-      <ComplaintHistory complaintsMessage={complaintsMessage} token_username={token_username} />
-    </div>
+    <>
+      <div className="flex justify-center mb-1 animate__animated animate__bounceInUp">
+        <button
+          onClick={toggleModal}
+          className="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600"
+        >
+          Open Message Form
+        </button>
+      </div>
+
+      {/* نافذة منبثقة */}
+      {isModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white rounded-lg shadow-lg max-w-md w-full p-6 relative">
+            <button
+              onClick={toggleModal}
+              className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+            <ComplaintForm />
+          </div>
+        </div>
+      )}
+      <ComplaintHistory />
+    </>
   );
 }

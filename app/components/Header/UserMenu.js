@@ -52,19 +52,6 @@ const UserMenu = ({ handleLogout }) => {
               <Menu.Item>
                 {({ active }) => (
                   <a
-                    href="#"
-                    className={classNames(
-                      'block px-4 py-2 text-sm text-text-dark',
-                      { 'bg-gray-100': active }
-                    )}
-                  >
-                    Your Profile
-                  </a>
-                )}
-              </Menu.Item>
-              <Menu.Item>
-                {({ active }) => (
-                  <a
                     href="/Dashboard"
                     className={classNames(
                       'block px-4 py-2 text-sm text-text-dark',

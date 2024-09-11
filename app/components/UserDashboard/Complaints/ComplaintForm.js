@@ -1,14 +1,13 @@
-import React, { useState } from 'react';
-import Modal from 'react-modal';
+import { useContext } from "react";
+import { AuthContext } from "@/app/context/authContext";
+import ComplaintsResources from "@/app/customHook/ComplaintsResources";
+import { jwtDecode } from "jwt-decode";
 
-const ComplaintForm = ({ createdComplaintData, onClose }) => {
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-
-  const openModal = () => setModalIsOpen(true);
-  const closeModal = () => {
-    setModalIsOpen(false);
-    if (onClose) onClose();
-  };
+export default function ComplaintForm() {
+  const { createdComplaintData } = ComplaintsResources();
+  const { tokens } = useContext(AuthContext);
+  const decodeTokens = jwtDecode(tokens.access);
+  const token_username = decodeTokens.username;
 
   const handleSendinMessage = (e) => {
     e.preventDefault();
@@ -17,7 +16,15 @@ const ComplaintForm = ({ createdComplaintData, onClose }) => {
     const priority = e.target.elements.priority.value;
     const message = e.target.elements.message.value;
 
+    // tokens related info
+    const address = decodeTokens.address;
+    const user_name = decodeTokens.username;
+    const phone_number = decodeTokens.phone_number;
+
     const complaintDetails = {
+      user_name,
+      phone_number,
+      address,
       subject,
       message,
       category,
@@ -25,134 +32,93 @@ const ComplaintForm = ({ createdComplaintData, onClose }) => {
     };
 
     createdComplaintData(complaintDetails);
-    const form = document.getElementById("complaintsSubmissionForm");
+    const form = document.getElementById("complaintsSumbitionForm");
     form.reset();
-    closeModal();
   };
 
   return (
-    <>
-      <button 
-        onClick={openModal} 
-        className="w-full bg-[#059669] hover:bg-primary-dark text-white font-semibold py-2 px-4 rounded-md shadow-md"
-      >
-        Submit a Complaint
-      </button>
-
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        contentLabel="Complaint Form"
-        className="fixed inset-0 flex items-center justify-center z-50"
-        overlayClassName="fixed inset-0 bg-bg-dark bg-opacity-50"
-      >
-        <div className="animate__animated animate__bounceInUp bg-bg-light dark:bg-bg-dark p-6 rounded-lg shadow-md relative z-10 w-full max-w-3xl border border-primary-dark dark:border-primary">
-          <h2 className="text-lg font-semibold mb-4 text-text-dark dark:text-text-light text-center">
-            Send a Message
-          </h2>
-
-          <form
-            onSubmit={handleSendinMessage}
-            className="grid grid-cols-1 md:grid-cols-2 gap-4"
-            id="complaintsSubmissionForm"
-            method="POST"
-          >
+    <div class="flex items-center justify-center text-text-dark animate__animated animate__bounceInUp">
+      <div class="bg-white drak:bg-gray-900 rounded-lg px-8 py-4 w-full max-w-4xl">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-3 text-center">
+          Send a Message
+        </h2>
+        <form onSubmit={handleSendinMessage} id="complaintsSumbitionForm" method="POST">
+          <div class="grid grid-cols-1 gap-3">
             {/* Subject */}
-            <div className="col-span-2">
-              <label
-                htmlFor="subject"
-                className="block text-sm font-medium text-text-dark dark:text-text-light mb-1"
-              >
+            <div class="mb-4">
+              <label for="subject" class="block text-sm font-medium text-gray-700">
                 Subject
               </label>
               <input
                 type="text"
                 id="subject"
                 name="subject"
-                className="w-full p-2 border rounded text-sm focus:outline-none focus:border-primary dark:bg-bg-dark dark:border-gray-700 dark:text-text-light"
+                class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 placeholder="Enter the subject"
                 required
               />
             </div>
 
-            {/* Category */}
-            <div>
-              <label
-                htmlFor="category"
-                className="block text-sm font-medium text-text-dark dark:text-text-light mb-1"
-              >
-                Category
-              </label>
-              <select
-                id="category"
-                name="category"
-                className="w-full p-2 border rounded text-sm focus:outline-none focus:border-primary dark:bg-bg-dark dark:border-gray-700 dark:text-text-light"
-              >
-                <option value="maintenance">Maintenance</option>
-                <option value="payment">Payment</option>
-                <option value="noise">Noise Complaint</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-
-            {/* Priority */}
-            <div>
-              <label
-                htmlFor="priority"
-                className="block text-sm font-medium text-text-dark dark:text-text-light mb-1"
-              >
-                Priority
-              </label>
-              <select
-                id="priority"
-                name="priority"
-                className="w-full p-2 border rounded text-sm focus:outline-none focus:border-primary dark:bg-bg-dark dark:border-gray-700 dark:text-text-light"
-              >
-                <option value="low">Low</option>
-                <option value="medium">Medium</option>
-                <option value="high">High</option>
-              </select>
+            {/* Category and Priority */}
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div class="mb-4">
+                <label for="category" class="block text-sm font-medium text-gray-700">
+                  Category
+                </label>
+                <select
+                  id="category"
+                  name="category"
+                  class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                >
+                  <option value="maintenance">Maintenance</option>
+                  <option value="payment">Payment</option>
+                  <option value="noise">Noise Complaint</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div class="mb-4">
+                <label for="priority" class="block text-sm font-medium text-gray-700">
+                  Priority
+                </label>
+                <select
+                  id="priority"
+                  name="priority"
+                  class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                >
+                  <option value="low">Low</option>
+                  <option value="medium">Medium</option>
+                  <option value="high">High</option>
+                </select>
+              </div>
             </div>
 
             {/* Message */}
-            <div className="col-span-2">
-              <label
-                htmlFor="message"
-                className="block text-sm font-medium text-text-dark dark:text-text-light mb-1"
-              >
+            <div class="mb-4">
+              <label for="message" class="block text-sm font-medium text-gray-700">
                 Message
               </label>
               <textarea
                 id="message"
                 name="message"
                 rows="4"
-                className="w-full p-2 border rounded text-sm focus:outline-none focus:border-primary dark:bg-bg-dark dark:border-gray-700 dark:text-text-light"
+                class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 placeholder="Enter your message"
                 required
               ></textarea>
             </div>
 
-            {/* Buttons */}
-            <div className="col-span-2 flex justify-end mt-4">
-              <button
-                type="button"
-                onClick={closeModal}
-                className="bg-red-500 text-white py-2 px-4 rounded-md text-sm mr-2 hover:bg-red-600"
-              >
-                Close
-              </button>
+            {/* Submit Button */}
+            <div class="mt-6">
               <button
                 type="submit"
-                className="bg-green-500 text-white py-2 px-4 rounded-md text-sm hover:bg-green-600"
+                class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md shadow-md focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
               >
                 Send Message
               </button>
             </div>
-          </form>
-        </div>
-      </Modal>
-    </>
+          </div>
+        </form>
+      </div>
+    </div>
   );
-};
-
-export default ComplaintForm;
+}

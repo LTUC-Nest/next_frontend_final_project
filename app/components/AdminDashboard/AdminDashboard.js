@@ -8,20 +8,18 @@ import Inbox from "./Inbox/Inbox";
 import UserProfile from "../UserDashboard/UserProfile/UserProfile";
 import ComplaintsResources from "@/app/customHook/ComplaintsResources";
 
-
 export default function AdminDashboard() {
   const { logout } = useContext(AuthContext);
   const [activePage, setActivePage] = useState("dashboard");
   const [showAddUserForm, setShowAddUserForm] = useState(false);
+
 
   const handleButtonClick = () => {
     setShowAddUserForm(prevState => !prevState);
   };
 
   const {fetchedComplaintsData} = ComplaintsResources()
-
   const messagesNumner = fetchedComplaintsData.length
-
 
   const renderContent = () => {
     switch (activePage) {

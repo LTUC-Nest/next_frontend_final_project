@@ -4,7 +4,7 @@ import { faTh, faList } from '@fortawesome/free-solid-svg-icons';
 import UpdateModal from './UpdateModal';
 import CreateModal from './CreateModal';
 import InfoModal from './InfoModal';
-import usePropertyResource from '@/app/customHook/usePropertyResource';
+import usePropertyResource from '@/app/customHook/PropertyResources';
 
 
 // Reusable Message Component

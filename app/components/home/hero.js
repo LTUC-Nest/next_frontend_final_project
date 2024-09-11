@@ -1,3 +1,5 @@
+
+
 export default function Hero() {
   return (
       <div className="animate__animated animate__bounceInUp relative isolate overflow-hidden bg-bg-light dark:bg-bg-dark py-60 bg-fixed bg-cover bg-center" style={{ backgroundImage: "url('/RealEstateBG.png')" }}>
@@ -11,6 +13,7 @@ export default function Hero() {
                           Enhance your property management and rental process with our expertise. We offer dedicated service and innovative solutions to meet all your real estate needs.
                       </p>
                   </div>
+
               </div>
           </div>
       </div>

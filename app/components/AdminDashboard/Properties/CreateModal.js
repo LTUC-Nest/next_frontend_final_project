@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import usePropertyResource from '@/app/customHook/usePropertyResource';
+import usePropertyResource from '@/app/customHook/PropertyResources';
 import { AuthContext } from '@/app/context/authContext';
 import { jwtDecode } from 'jwt-decode';
 
