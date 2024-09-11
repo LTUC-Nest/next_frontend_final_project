@@ -1,11 +1,11 @@
 import React, { useContext, useState } from 'react';
-import useTenantResource from '@/app/customHook/useResourceTenant';
+import TenantResources from '@/app/customHook/TenantResources';
 import { AuthContext } from '@/app/context/authContext';
 import { jwtDecode } from 'jwt-decode';
 
-const AddTenantForm = ({ onClose }) => {
-    const { addTenant, successMessage, errorMessage } = useTenantResource();
+const CreateModal = ({ onClose }) => {
     const { tokens } = useContext(AuthContext);
+    const { addTenant, successMessage, errorMessage } = TenantResources();
 
     const decodedToken = jwtDecode(tokens.access);
     const adminId = decodedToken.user_id;
@@ -21,30 +21,26 @@ const AddTenantForm = ({ onClose }) => {
         date_of_birth: '',
         emergency_contact_name: '',
         emergency_contact_phone: '',
-        profile_picture: null,
-        owner: adminId
     });
 
     const handleChange = (e) => {
         const { name, value, type, files } = e.target;
         setFormData({
             ...formData,
-            [name]: type === 'file' ? files[0] : value
+            [name]: type === 'file' ? files[0] : value,
         });
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         const formDataToSend = new FormData();
         for (const key in formData) {
             if (formData[key] !== undefined) {
                 formDataToSend.append(key, formData[key]);
             }
         }
-
+        formDataToSend.append('admin_id', adminId);
         const result = await addTenant(formDataToSend);
-
         if (result.success) {
             setFormData({
                 username: '',
@@ -57,21 +53,17 @@ const AddTenantForm = ({ onClose }) => {
                 date_of_birth: '',
                 emergency_contact_name: '',
                 emergency_contact_phone: '',
-                profile_picture: null,
-                owner: adminId
             });
-            if (onClose) onClose();
+            if (onClose) onClose(); // Close form or perform other actions
         }
     };
 
     return (
-        <div className="animate__animated animate__bounceInUp fixed inset-0 flex items-center justify-center z-50">
-            <div className="bg-bg-dark opacity-80 fixed inset-0"></div>
+        <div className="animate__animated animate__bounceInUp fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-80">
             <div className="bg-bg-light dark:bg-bg-dark p-6 rounded shadow-md relative z-10 w-full max-w-3xl border border-primary-dark dark:border-primary">
                 <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-lg font-semibold text-text-dark dark:text-text-light">Add New Tenant</h2>
+                    <h2 className="text-lg font-semibold mb-4 text-text-dark dark:text-text-light">Add New Tenant</h2>
                 </div>
-
                 {successMessage && (
                     <div className="mb-4 p-4 bg-green-100 text-green-700 border border-green-300 rounded-md dark:bg-green-800 dark:text-green-200 dark:border-green-700">
                         {successMessage}
@@ -82,7 +74,6 @@ const AddTenantForm = ({ onClose }) => {
                         {errorMessage}
                     </div>
                 )}
-
                 <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     {/* Username */}
                     <div>
@@ -255,7 +246,7 @@ const AddTenantForm = ({ onClose }) => {
                         </button>
                         <button
                             type="submit"
-                            className="bg-green-500 text-white py-1 px-3 rounded text-sm hover:bg-green-600"
+                            className="bg-primary text-white py-1 px-3 rounded text-sm hover:bg-primary-dark"
                         >
                             Add Tenant
                         </button>
@@ -266,4 +257,4 @@ const AddTenantForm = ({ onClose }) => {
     );
 };
 
-export default AddTenantForm;
+export default CreateModal;

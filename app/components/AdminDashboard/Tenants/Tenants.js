@@ -2,8 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTh, faList } from '@fortawesome/free-solid-svg-icons';
 import EditTenantForm from './EditTenantForm';
-import AddTenantForm from './AddTenantForm';
-import useTenantResource from '@/app/customHook/useResourceTenant';
+import AddTenantForm from './CreateModal';
+import TenantResources from '@/app/customHook/TenantResources';
 import InfoModal from './InfoModal';
 
 // Reusable Message Component
@@ -21,7 +21,7 @@ const Tenant = () => {
     const [selectedTenant, setSelectedTenant] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const { tenant = [], fetchTenant, deleteTenant, successMessage, errorMessage } = useTenantResource();
+    const { tenant = [], fetchTenant, deleteTenant, successMessage, errorMessage } = TenantResources();
 
     useEffect(() => {
         fetchTenant();

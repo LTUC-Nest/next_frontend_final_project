@@ -21,7 +21,7 @@ export default function Dashbord() {
     if (is_superuser) {
       return (
         <>
-          <AdminDashboard className='animate__animated animate__bounceInUp bg-bg-light dark:bg-bg-dark'/>
+          <UserDashborde className='animate__animated animate__bounceInUp bg-bg-light dark:bg-bg-dark'/>
         </>
       );
     } else {

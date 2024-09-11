@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import PropertyCard from "@/app/components/properties/card";
-import usePropertyResource from '@/app/customHook/userResourceProperty';
+import usePropertyResource from '@/app/customHook/usePropertyResource';
 
 export default function Properties() {
   const [properties, setProperties] = useState([]);

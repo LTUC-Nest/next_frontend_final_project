@@ -21,7 +21,7 @@ const UpdateModal = ({ propertyId, onClose, fetchProperties }) => {
         const fetchPropertyData = async () => {
             setLoading(true);
             try {
-                const response = await axios.get(`http://localhost:8000/api/v1/properties/${propertyId}`);
+                const response = await axios.get(`https://djang-backend-final-project.onrender.com/api/v1/properties/${propertyId}`);
                 setPropertyData(response.data);
                 setFormData(response.data);
             } catch (error) {
@@ -49,7 +49,7 @@ const UpdateModal = ({ propertyId, onClose, fetchProperties }) => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            await axios.put(`http://localhost:8000/api/v1/properties/${propertyId}`, formData);
+            await axios.put(`https://djang-backend-final-project.onrender.com/api/v1/properties/${propertyId}`, formData);
             fetchProperties();
             onClose(); // Close the form after successful update
         } catch (error) {
@@ -66,7 +66,7 @@ const UpdateModal = ({ propertyId, onClose, fetchProperties }) => {
     }
 
     return (
-        <div className="animate__animated animate__bounceInUp fixed inset-0 flex items-center justify-center z-50">
+        <div className="animate__animated animate__bounceInUp fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-80">
             <div className="bg-bg-light dark:bg-bg-dark p-6 rounded shadow-md relative w-full max-w-3xl border border-primary-dark dark:border-primary">
                 <div className="flex justify-between items-center mb-4">
                     <h2 className="text-lg font-semibold text-text-dark dark:text-text-light">Edit Property</h2>

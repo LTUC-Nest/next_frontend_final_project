@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
-import useResourcesCompalints from "@/app/customHook/complaints";
+import ComplaintsResources from "@/app/customHook/ComplaintsResources";
 import ComplaintCard from "./ComplaintCard";
 import LoadingSpinner from "../../LoadingSpinner";
 import Error from "./Error";
 import Response from "./Response";
 
 export default function Inbox() {
-  const { fetchedComplaintsData, loading, error } = useResourcesCompalints();
+  const { fetchedComplaintsData, loading, error } = ComplaintsResources();
 
   const [complaintsMessage, setComplaintsMessage] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);

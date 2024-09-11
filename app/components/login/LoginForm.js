@@ -9,13 +9,21 @@ function LoginForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const username = e.target.username.value;
-    const password = e.target.password.value;
+
+    // Create FormData object to handle form values
+    const formData = new FormData(e.target);
+    const username = formData.get('username');
+    const password = formData.get('password');
+
+    setError(''); // Reset the error state before making the request
 
     try {
       await login({ username, password });
+      // Optionally, redirect or show a success message here
     } catch (err) {
-      setError('Login failed. Please try again.');
+      // Assuming err could be an Error object with a message
+      const errorMessage = err?.message || 'Login failed. Please try again.';
+      setError(errorMessage);
     }
   };
 
@@ -24,7 +32,7 @@ function LoginForm() {
       <div className="w-full max-w-md bg-white dark:bg-gray-900 p-8 rounded-lg shadow-lg ring-1 ring-gray-900/5 dark:ring-gray-700">
         <h1 className="text-3xl font-bold text-text-dark dark:text-text-light text-center mb-4">Sign In</h1>
         <p className="text-sm text-gray-600 dark:text-gray-300 text-center mb-6">Sign in to access your account</p>
-        {error && <p className="text-red-500 text-center mb-4">{error}</p>}
+        {error && <p className="text-red-500 text-center mb-4" aria-live="assertive">{error}</p>}
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label

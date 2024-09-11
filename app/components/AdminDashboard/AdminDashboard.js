@@ -6,7 +6,7 @@ import Properties from "./Properties/Properties";
 import Tenants from "./Tenants/Tenants";
 import Inbox from "./Inbox/Inbox";
 import UserProfile from "../UserDashboard/UserProfile/UserProfile";
-import useResourcesComplaints from "@/app/customHook/complaints";
+import ComplaintsResources from "@/app/customHook/ComplaintsResources";
 
 
 export default function AdminDashboard() {
@@ -18,7 +18,7 @@ export default function AdminDashboard() {
     setShowAddUserForm(prevState => !prevState);
   };
 
-  const {fetchedComplaintsData} = useResourcesComplaints()
+  const {fetchedComplaintsData} = ComplaintsResources()
 
   const messagesNumner = fetchedComplaintsData.length
 

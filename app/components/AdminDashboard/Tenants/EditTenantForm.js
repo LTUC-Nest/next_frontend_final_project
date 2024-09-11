@@ -10,7 +10,7 @@ const EditTenantForm = ({ tenantId, onClose, fetchTenant }) => {
         address: '',
         emergency_contact_name: '',
         emergency_contact_phone: '',
-        updated_at: '',
+
     });
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -20,7 +20,7 @@ const EditTenantForm = ({ tenantId, onClose, fetchTenant }) => {
         const fetchTenantData = async () => {
             setLoading(true);
             try {
-                const response = await axios.get(`http://localhost:8000/api/v1/users/${tenantId}`);
+                const response = await axios.get(`https://djang-backend-final-project.onrender.com/api/v1/users/${tenantId}`);
                 setTenantData(response.data);
                 setFormData(response.data);
             } catch (error) {
@@ -50,7 +50,7 @@ const EditTenantForm = ({ tenantId, onClose, fetchTenant }) => {
         event.preventDefault();
         setError(null); // Clear previous errors before making a new request
         try {
-            const response = await axios.put(`http://localhost:8000/api/v1/users/${tenantId}`, formData);
+            const response = await axios.put(`https://djang-backend-final-project.onrender.com/api/v1/users/${tenantId}`, formData);
             console.log('Update Response:', response);  // Log the response for debugging
             if (response.status >= 200 && response.status < 300) {  // Check if the response status is within the success range
                 await fetchTenant();  // Ensure fetchTenant is awaited if it returns a promise
@@ -97,7 +97,7 @@ const EditTenantForm = ({ tenantId, onClose, fetchTenant }) => {
                     </div>
                 )}
                 <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    {['username', 'phone_number', 'address', 'emergency_contact_name', 'emergency_contact_phone'].map((field) => (
+                    {['username','password', 'email','first_name', 'last_name', 'phone_number', 'address', 'emergency_contact_name', 'emergency_contact_phone'].map((field) => (
                         <div key={field}>
                             <label htmlFor={field} className="block text-sm font-medium text-text-dark dark:text-text-light capitalize">
                                 {field.replace('_', ' ')}
@@ -112,17 +112,6 @@ const EditTenantForm = ({ tenantId, onClose, fetchTenant }) => {
                             />
                         </div>
                     ))}
-                    <div>
-                        <label htmlFor="updated_at" className="block text-sm font-medium text-text-dark dark:text-text-light">Updated At</label>
-                        <input
-                            id="updated_at"
-                            name="updated_at"
-                            type="date"
-                            value={formData.updated_at || ''}
-                            onChange={handleChange}
-                            className="w-full p-1 border rounded text-sm focus:outline-none focus:border-primary dark:bg-bg-dark dark:border-gray-700 dark:text-text-light"
-                        />
-                    </div>
                     <div className="col-span-2 flex justify-end mt-4 space-x-2">
                         <button
                             type="button"

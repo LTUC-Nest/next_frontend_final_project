@@ -3,8 +3,8 @@ import { AuthContext } from "../context/authContext";
 import useSWR from "swr";
 
 // Define the hook
-export default function useResourcesComplaints() {
-  const apiEndPoint = 'http://127.0.0.1:8000/api/v1/complaints/';
+export default function ComplaintsResources() {
+  const apiEndPoint = 'https://djang-backend-final-project.onrender.com/api/v1/complaints/';
   const { tokens } = useContext(AuthContext);
   const { data, err, mutate } = useSWR([apiEndPoint, tokens], fetchResource);
 

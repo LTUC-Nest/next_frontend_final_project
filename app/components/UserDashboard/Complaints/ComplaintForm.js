@@ -34,7 +34,7 @@ const ComplaintForm = ({ createdComplaintData, onClose }) => {
     <>
       <button 
         onClick={openModal} 
-        className="w-full bg-primary hover:bg-primary-dark text-white font-semibold py-2 px-4 rounded-md shadow-md"
+        className="w-full bg-[#059669] hover:bg-primary-dark text-white font-semibold py-2 px-4 rounded-md shadow-md"
       >
         Submit a Complaint
       </button>

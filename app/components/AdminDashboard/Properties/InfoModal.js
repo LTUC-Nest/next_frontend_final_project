@@ -2,23 +2,21 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 
+
 const InfoModal = ({ property, onClose, onEdit, onDelete }) => {
     if (!property) return null;
-
     const handleDelete = () => {
         if (window.confirm('Are you sure you want to delete this property?')) {
             onDelete(property.id);
             onClose(); // Close modal after delete
         }
     };
-
     const handleEdit = () => {
         onEdit(property.id); // Trigger edit
         onClose(); // Close modal after editing
     };
-
     return (
-        <div className="animate__animated animate__bounceInUp fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+        <div className="animate__animated animate__bounceInUp fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-80">
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg w-full max-w-md mx-4">
                 <div className="flex justify-between items-center p-4 border-b border-gray-200 dark:border-gray-700">
                     <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Property Details</h3>
@@ -31,8 +29,14 @@ const InfoModal = ({ property, onClose, onEdit, onDelete }) => {
                     </button>
                 </div>
                 <div className="p-4">
+                    <p className="text-sm text-gray-600 dark:text-gray-400"><strong>Name:</strong> {property.name}</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400"><strong>Property Type:</strong> {property.property_type}</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400"><strong>Country:</strong> {property.country}</p>
                     <p className="text-sm text-gray-600 dark:text-gray-400"><strong>Address:</strong> {property.address}</p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400"><strong>State:</strong> {property.state}, <strong>Country:</strong> {property.country}</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400"><strong>City:</strong> {property.city}</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400"><strong>State:</strong> {property.state}</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400"><strong>Postal Code:</strong> {property.postal_code}</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400"><strong>Available From:</strong> {property.available_from}</p>
                     <p className="text-sm text-gray-600 dark:text-gray-400"><strong>Description:</strong> {property.description}</p>
                 </div>
                 <div className="flex justify-end p-4 border-t border-gray-200 dark:border-gray-700 space-x-2">
@@ -59,5 +63,4 @@ const InfoModal = ({ property, onClose, onEdit, onDelete }) => {
         </div>
     );
 };
-
 export default InfoModal;

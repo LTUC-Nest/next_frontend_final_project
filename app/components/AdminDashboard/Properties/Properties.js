@@ -4,7 +4,8 @@ import { faTh, faList } from '@fortawesome/free-solid-svg-icons';
 import UpdateModal from './UpdateModal';
 import CreateModal from './CreateModal';
 import InfoModal from './InfoModal';
-import usePropertyResource from '@/app/customHook/userResourceProperty';
+import usePropertyResource from '@/app/customHook/usePropertyResource';
+
 
 // Reusable Message Component
 const Message = React.memo(({ message, type }) => (
@@ -13,6 +14,8 @@ const Message = React.memo(({ message, type }) => (
     </div>
 ));
 
+
+
 // Main Properties Component
 const Properties = () => {
     const [editPropertyId, setEditPropertyId] = useState(null);
@@ -20,7 +23,6 @@ const Properties = () => {
     const [showAddPropertyForm, setShowAddPropertyForm] = useState(false);
     const [viewMode, setViewMode] = useState('list');
     const [selectedProperty, setSelectedProperty] = useState(null);
-
     const { properties = [], fetchProperties, deleteProperty, successMessage, errorMessage } = usePropertyResource();
 
     useEffect(() => {
@@ -60,6 +62,7 @@ const Properties = () => {
         setSelectedProperty(property);
     };
 
+
     return (
         <>
             <div className="animate__animated animate__bounceInUp p-6 bg-gray-50 dark:bg-gray-900 rounded-lg shadow-md">
@@ -88,11 +91,9 @@ const Properties = () => {
                         </button>
                     </div>
                 </div>
-
                 {/* Success and Error Messages */}
                 {successMessage && <Message message={successMessage} type="success" />}
                 {errorMessage && <Message message={errorMessage} type="error" />}
-
                 {/* Properties Grid */}
                 {viewMode === 'grid' ? (
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -120,10 +121,8 @@ const Properties = () => {
                                 <tr>
                                     <th scope="col" className="px-6 py-3">Name</th>
                                     <th scope="col" className="px-6 py-3">Address</th>
-                                    <th scope="col" className="px-6 py-3">Owner</th>
-                                    <th scope="col" className="px-6 py-3">Size</th>
-                                    <th scope="col" className="px-6 py-3">Rent</th>
-                                    <th scope="col" className="px-6 py-3">Status</th>
+                                    <th scope="col" className="px-6 py-3">property type</th>
+                                    <th scope="col" className="px-6 py-3">available from</th>
                                     <th scope="col" className="px-6 py-3">Action</th>
                                 </tr>
                             </thead>
@@ -135,10 +134,8 @@ const Properties = () => {
                                     >
                                         <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{property.name}</td>
                                         <td className="px-6 py-4">{property.address}</td>
-                                        <td className="px-6 py-4">{property.owner}</td>
-                                        <td className="px-6 py-4">{property.size} sq ft</td>
-                                        <td className="px-6 py-4">${property.rent}</td>
-                                        <td className="px-6 py-4">{property.status}</td>
+                                        <td className="px-6 py-4">{property.property_type}</td>
+                                        <td className="px-6 py-4">{property.available_from}</td>
                                         <td className="px-6 py-4 flex space-x-2">
                                             <button
                                                 onClick={() => handleEditProperty(property.id)}
@@ -184,7 +181,6 @@ const Properties = () => {
                     </div>
                 )}
             </div>
-
             {/* Modals */}
             {showEditPropertyForm && (
                 <UpdateModal
@@ -207,5 +203,4 @@ const Properties = () => {
         </>
     );
 };
-
 export default Properties;
