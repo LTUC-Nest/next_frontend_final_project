@@ -72,7 +72,7 @@ const useTenantResource = () => {
                 'updated_at',
                 'profile_picture'];
             for (const field of requiredFields) {
-                if (!propertyData[field]) {
+                if (!tenantData[field]) {
                     throw new Error(`Missing required field: ${field}`);
                 }
             }

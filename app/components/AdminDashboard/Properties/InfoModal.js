@@ -31,9 +31,16 @@ const InfoModal = ({ property, onClose, onEdit, onDelete }) => {
                     </button>
                 </div>
                 <div className="p-4">
+                    <p className="text-sm text-gray-600 dark:text-gray-400"><strong>Name:</strong> {property.name}</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400"><strong>Property Type:</strong> {property.property_type}</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400"><strong>Country:</strong> {property.country}</p>
                     <p className="text-sm text-gray-600 dark:text-gray-400"><strong>Address:</strong> {property.address}</p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400"><strong>State:</strong> {property.state}, <strong>Country:</strong> {property.country}</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400"><strong>City:</strong> {property.city}</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400"><strong>State:</strong> {property.state}</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400"><strong>Postal Code:</strong> {property.postal_code}</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400"><strong>Available From:</strong> {property.available_from}</p>
                     <p className="text-sm text-gray-600 dark:text-gray-400"><strong>Description:</strong> {property.description}</p>
+
                 </div>
                 <div className="flex justify-end p-4 border-t border-gray-200 dark:border-gray-700 space-x-2">
                     <button

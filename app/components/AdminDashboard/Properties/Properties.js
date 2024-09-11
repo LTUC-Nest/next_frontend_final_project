@@ -120,10 +120,8 @@ const Properties = () => {
                                 <tr>
                                     <th scope="col" className="px-6 py-3">Name</th>
                                     <th scope="col" className="px-6 py-3">Address</th>
-                                    <th scope="col" className="px-6 py-3">Owner</th>
-                                    <th scope="col" className="px-6 py-3">Size</th>
-                                    <th scope="col" className="px-6 py-3">Rent</th>
-                                    <th scope="col" className="px-6 py-3">Status</th>
+                                    <th scope="col" className="px-6 py-3">property_type</th>
+                                    <th scope="col" className="px-6 py-3">available_from</th>
                                     <th scope="col" className="px-6 py-3">Action</th>
                                 </tr>
                             </thead>
@@ -135,10 +133,8 @@ const Properties = () => {
                                     >
                                         <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{property.name}</td>
                                         <td className="px-6 py-4">{property.address}</td>
-                                        <td className="px-6 py-4">{property.owner}</td>
-                                        <td className="px-6 py-4">{property.size} sq ft</td>
-                                        <td className="px-6 py-4">${property.rent}</td>
-                                        <td className="px-6 py-4">{property.status}</td>
+                                        <td className="px-6 py-4">{property.property_type}</td>
+                                        <td className="px-6 py-4">{property.available_from}</td>
                                         <td className="px-6 py-4 flex space-x-2">
                                             <button
                                                 onClick={() => handleEditProperty(property.id)}
