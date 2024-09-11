@@ -31,7 +31,7 @@ const LeaseExpiration = () => {
           accessToken = await refreshAccessToken();
           if (accessToken) {
             // Retry fetching with the new token
-            const retryResponse = await fetch('http://127.0.0.1:8000/api/v1/leases/expiring-leases/', {
+            const retryResponse = await fetch('https://djang-backend-final-project.onrender.com/leases/expiring-leases/', {
               headers: {
                 'Authorization': `Bearer ${accessToken}`,
               }
