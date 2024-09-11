@@ -10,7 +10,7 @@ const usePropertyResource = () => {
 
     const fetchProperties = async () => {
         try {
-            const response = await axios.get('https://djang-backend-final-project.onrender.com/api/v1/properties/');
+            const response = await axios.get('http://127.0.0.1:8000/api/v1/properties/');
             setProperties(response.data);
         } catch (error) {
             console.error('Error fetching properties:', error);
@@ -20,7 +20,7 @@ const usePropertyResource = () => {
 
     const fetchPropertyById = async (propertyId) => {
         try {
-            const response = await axios.get(`https://djang-backend-final-project.onrender.com/api/v1/properties/${propertyId}`);
+            const response = await axios.get(`http://127.0.0.1:8000/api/v1/properties/${propertyId}`);
             setPropertyData(response.data);
         } catch (error) {
             console.error('Error fetching property data:', error);
@@ -30,7 +30,7 @@ const usePropertyResource = () => {
 
     const editProperty = async (propertyId, formData) => {
         try {
-            await axios.put(`https://djang-backend-final-project.onrender.com/api/v1/properties/${propertyId}`, formData, {
+            await axios.put(`http://127.0.0.1:8000/api/v1/properties/${propertyId}`, formData, {
                 headers: { 'Content-Type': 'application/json' },
             });
             fetchProperties(); // Refresh the property list
@@ -42,7 +42,7 @@ const usePropertyResource = () => {
 
     const deleteProperty = async (propertyId) => {
         try {
-            await axios.delete(`https://djang-backend-final-project.onrender.com/api/v1/properties/${propertyId}`);
+            await axios.delete(`http://127.0.0.1:8000/api/v1/properties/${propertyId}`);
             // setSuccessMessage('Property deleted successfully!');
             setErrorMessage('');
             fetchProperties(); // Refresh the property list after deletion
@@ -76,7 +76,7 @@ const usePropertyResource = () => {
             }
 
             // Make POST request
-            const response = await axios.post('https://djang-backend-final-project.onrender.com/api/v1/properties/create/', propertyData, {
+            const response = await axios.post('http://127.0.0.1:8000/api/v1/properties/create/', propertyData, {
                 headers: { 'Content-Type': 'application/json' },
             });
 

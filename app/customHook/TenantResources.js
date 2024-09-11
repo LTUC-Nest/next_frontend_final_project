@@ -11,7 +11,7 @@ const TenantResources = () => {
 
     const fetchTenant = async () => {
         try {
-            const response = await axios.get('https://djang-backend-final-project.onrender.com/api/v1/users/');
+            const response = await axios.get('http://127.0.0.1:8000/api/v1/users/');
             setTenant(response.data);
         } catch (error) {
             console.error('Error fetching tenant:', error);
@@ -21,7 +21,7 @@ const TenantResources = () => {
 
     const fetchTenantById = async (tenantId) => {
         try {
-            const response = await axios.get(`https://djang-backend-final-project.onrender.com/api/v1/users/${tenantId}`);
+            const response = await axios.get(`http://127.0.0.1:8000/api/v1/users/${tenantId}`);
             setTenantData(response.data);
         } catch (error) {
             console.error('Error fetching tenant data:', error);
@@ -33,7 +33,7 @@ const TenantResources = () => {
         try {
             console.log('Sending data for edit:', formData);
     
-            await axios.put(`https://djang-backend-final-project.onrender.com/api/v1/users/${tenantId}`, formData, {
+            await axios.put(`http://127.0.0.1:8000/api/v1/users/${tenantId}`, formData, {
                 headers: { 'Content-Type': 'application/json' },
             });
     
@@ -46,7 +46,7 @@ const TenantResources = () => {
 
     const deleteTenant = async (tenantId) => {
         try {
-            await axios.delete(`https://djang-backend-final-project.onrender.com/api/v1/users/${tenantId}`);
+            await axios.delete(`http://127.0.0.1:8000/api/v1/users/${tenantId}`);
             // setSuccessMessage('Property deleted successfully!');
             setErrorMessage('');
             fetchTenant(); // Refresh the property list after deletion
@@ -80,7 +80,7 @@ const TenantResources = () => {
                 }
             }
     
-            const response = await axios.post('https://djang-backend-final-project.onrender.com/api/v1/users/create/', tenantData, {
+            const response = await axios.post('http://127.0.0.1:8000/api/v1/users/create/', tenantData, {
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
     

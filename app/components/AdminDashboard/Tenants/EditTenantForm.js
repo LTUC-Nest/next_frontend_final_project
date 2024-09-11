@@ -20,7 +20,7 @@ const EditTenantForm = ({ tenantId, onClose, fetchTenant }) => {
         const fetchTenantData = async () => {
             setLoading(true);
             try {
-                const response = await axios.get(`https://djang-backend-final-project.onrender.com/api/v1/users/${tenantId}`);
+                const response = await axios.get(`http://127.0.0.1:8000/api/v1/users/${tenantId}`);
                 setTenantData(response.data);
                 setFormData(response.data);
             } catch (error) {

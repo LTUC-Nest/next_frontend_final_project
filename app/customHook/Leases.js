@@ -4,7 +4,7 @@ import useSWR from "swr";
 
 
 export default function useResourcesLeases(){
-  const apiEndPoint = 'https://djang-backend-final-project.onrender.com/api/v1/leaseAgreement/names/'
+  const apiEndPoint = 'http://127.0.0.1:8000/api/v1/leaseAgreement/names/'
   const {tokens} = useContext(AuthContext);
   const {data,err,mutate} = useSWR([apiEndPoint,tokens],fetchResource);
 
@@ -43,7 +43,7 @@ export default function useResourcesLeases(){
     }
     try{
       console.log(id)
-      const url = "https://djang-backend-final-project.onrender.com/api/v1/leaseAgreement/"+id
+      const url = "http://127.0.0.1:8000/api/v1/leaseAgreement/"+id
       const options = config()
       options.method = 'DELETE'
       await fetch(url,options)
@@ -60,7 +60,7 @@ export default function useResourcesLeases(){
     }
     try{
       const options = config()
-      const url = 'https://djang-backend-final-project.onrender.com/api/v1/leaseAgreement/create/';
+      const url = 'http://127.0.0.1:8000/api/v1/leaseAgreement/create/';
       options.method = 'POST'
       options.body = JSON.stringify(leaseInfo)
       await fetch(url,options)
@@ -76,7 +76,7 @@ export default function useResourcesLeases(){
       return
     } try{
       const options = config()
-      const url = `https://djang-backend-final-project.onrender.com/api/v1/leaseAgreement/${leaseId}`
+      const url = `http://127.0.0.1:8000/api/v1/leaseAgreement/${leaseId}`
       options.method = 'PUT'
       options.body = JSON.stringify(leaseInfo)
       await fetch(url,options)
@@ -90,7 +90,7 @@ export default function useResourcesLeases(){
     if (!tokens){
       return
     } try{
-      const url = `https://djang-backend-final-project.onrender.com/api/v1/leaseAgreement/${id}`
+      const url = `http://127.0.0.1:8000/api/v1/leaseAgreement/${id}`
       const res = await fetch(url,config())
       const jsonRes = res.json()
       console.log(jsonRes)

@@ -35,7 +35,7 @@ export function useUserData() {
 
     const { data, error, isLoading, mutate } = useSWR(
         tokens?.access && userId
-            ? `https://djang-backend-final-project.onrender.com/api/v1/users/${userId}`
+            ? `http://127.0.0.1:8000/api/v1/users/${userId}`
             : null,
         (url) => fetcher(url, tokens.access),
         {
@@ -62,7 +62,7 @@ export function useUserData() {
                 throw new Error("No access token or user ID available for updating data");
             }
 
-            const updatedUser = await updater(`https://djang-backend-final-project.onrender.com/api/v1/users/${userId}`, tokens.access, updateData);
+            const updatedUser = await updater(`http://127.0.0.1:8000/api/v1/users/${userId}`, tokens.access, updateData);
             mutate(updatedUser, false); // Optimistically update the SWR cache
         } catch (err) {
             console.error("Error updating user data:", err);
@@ -70,7 +70,7 @@ export function useUserData() {
                 try {
                     const newAccessToken = await refreshAccessToken();
                     if (newAccessToken) {
-                        const updatedUser = await updater(`https://djang-backend-final-project.onrender.com/api/v1/users/${userId}`, newAccessToken, updateData);
+                        const updatedUser = await updater(`http://127.0.0.1:8000/api/v1/users/${userId}`, newAccessToken, updateData);
                         mutate(updatedUser, false); // Optimistically update the SWR cache
                     }
                 } catch (refreshError) {
