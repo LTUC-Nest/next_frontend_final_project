@@ -20,14 +20,7 @@ const MenuItem = ({ active, children, onClick }) => (
 const UserMenu = ({ handleLogout }) => {
   return (
     <div className="relative flex items-center space-x-3">
-      {/* Notification button */}
-      <button
-        type="button"
-        aria-label="View notifications"
-        className="relative rounded-full bg-red-600 p-1 text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-red-600"
-      >
-        <BellIcon aria-hidden="true" className="h-6 w-6" />
-      </button>
+
 
       {/* User menu */}
       <Menu as="div" className="relative">
