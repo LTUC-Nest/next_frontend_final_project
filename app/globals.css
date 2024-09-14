@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import 'animate.css';
+
+
+/* styles.css */
+.flip-enter {
+    opacity: 0;
+    transform: rotateY(90deg);
+  }
+  
+  .flip-enter-active {
+    opacity: 1;
+    transform: rotateY(0deg);
+    transition: opacity 600ms, transform 600ms;
+  }
+  
+  .flip-exit {
+    opacity: 1;
+    transform: rotateY(0deg);
+  }
+  
+  .flip-exit-active {
+    opacity: 0;
+    transform: rotateY(-90deg);
+    transition: opacity 600ms, transform 600ms;
+  }
+  
+  /* Transition for the messages */
+.message-enter {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+.message-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 500ms, transform 500ms;
+}
+.message-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+.message-exit-active {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 500ms, transform 500ms;
+}
+
+
+
